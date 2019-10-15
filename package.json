@@ -1,0 +1,27 @@
+{
+  "name": "startup-grant-database-pt5-be",
+  "version": "1.0.0",
+  "description": "Backend for the Grant Application Labs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server":"nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lambda-School-Labs/startup-grant-database-pt5-be.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lambda-School-Labs/startup-grant-database-pt5-be/issues"
+  },
+  "homepage": "https://github.com/Lambda-School-Labs/startup-grant-database-pt5-be#readme",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "knex": "^0.19.5",
+    "nodemon": "^1.19.3",
+    "pg": "^7.12.1"
+  }
+}
