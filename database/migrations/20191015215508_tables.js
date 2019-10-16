@@ -8,7 +8,7 @@ exports.up = function(knex) {
     //USER TABLE
     .createTable('users', table =>{
         table.increments('id'),
-        table.string('user_type', 1).notNullable(),
+        table.string('user_type', 1),
         table.string('email').notNullable().unique(),
         table.string('uid').notNullable().unique(),
         table.string('first_name', 50),
