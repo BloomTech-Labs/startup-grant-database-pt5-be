@@ -29,11 +29,55 @@
                  .onUpdate('CASCADE')
                  .onDelete('RESTRICT'),
             table.timestamp('alert_date').notNullable(),
-            table.integer('alerts_type_id').references('id').inTable('alerts_type')
+            table.integer('alerts_type_id').notNullable().references('id').inTable('alerts_type')
                  .onUpdate('CASCADE')
                  .onDelete('RESTRICT')
         })
-    
+        //-----------------------------------------------------------------------------------------------
+        //CATEGORY KEYS TABLE
+        .createTable('category_keys', table => {
+            table.increments('id'),
+            table.string('category_name', 100).notNullable().unique(),
+            table.string('category_description')
+        })
+        //CATEGORY_GRANTS
+        .createTable('category_grants', table => {
+            table.increments('id'),
+            table.integer('category_id').notNullable().references('id').inTable('category_keys')
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE') 
+        })
+        //-----------------------------------------------------------------------------------------------
+        //ELEGIBILITY TABLE
+        .createTable('eligibility', table => {
+            table.increments('id'),
+            table.string('eligibility_name', 100).notNullable().unique(),
+            table.string('eligibility_description', 255)
+        })
+        //ELIGIBILITY BY GRANTS TABLE
+        .createTable('eligibility_grants', table =>{
+            table.increments('id'),
+            table.integer('eligibility_id').notNullable().references('id').inTable('eligibility')
+                 .onUpdate('CASCADE')
+                 .onDelete('RESTRICT')
+        })
+        //-----------------------------------------------------------------------------------------------
+        //APPLICATION STATUS TABLE.
+        .createTable('application_status', table => {
+            table.increments('id'),
+            table.string('status_name', 100).notNullable().unique(),
+            table.string('status_description', 255)
+        })
+        //STATUS HISTORY
+        .createTable('status_history', table => {
+            table.increments('id'),
+            table.integer('grants_id').notNullable().references('id').inTable('grants')
+                 .onUpdate('CASCADE')
+                 .onDelete('RESTRICT')
+            table.integer('status_id').notNullable().references('id').inTable('application_status')
+                 .onUpdate('CASCADE')
+                 .onDelete('RESTRICT')     
+        })
         //CATEGORY TABLE
         .createTable('categories', table => {
             table.increments('id');
@@ -46,6 +90,17 @@
             return knex.schema.dropTableIfExists('alerts')
                               .dropTableIfExists('alerts_type')
                               .dropTableIfExists('users')
+                              .dropTableIfExists('category_keys')
+                              .dropTableIfExists('category_grants') 
+                              .dropTableIfExists('eligibility')
+                              .dropTableIfExists('eligibility_grants')  
+
+
+
+
+
+                              
+                              .dropTableIfExists('application_status')
                               .dropTableIfExists('categories')
                               
           };
