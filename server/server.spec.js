@@ -7,4 +7,9 @@ describe("Main Suite", () => {
       .get("/")
       .expect(200);
   });
+  it("should return 'text/html'", async () => {
+    const text = await request(server).get("/");
+    // console.log(text);
+    expect(text.type).toBe("text/html");
+  });
 });
