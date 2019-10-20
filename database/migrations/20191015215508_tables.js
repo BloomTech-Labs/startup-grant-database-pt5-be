@@ -1,4 +1,4 @@
-    exports.up = function(knex) {
+exports.up = function(knex) {
         //USER TABLE
         return knex.schema.createTable('users', table =>{
             table.increments('id'),
@@ -15,6 +15,7 @@
             table.string('zip_code', 10),
             table.timestamp('created_at').notNullable();
         })
+        //-----------------------------------------------------------------------------------------------
         //ALERTS TYPE TABLE
         .createTable('alerts_type', table => {
             table.increments('id'),
@@ -33,6 +34,30 @@
                  .onUpdate('CASCADE')
                  .onDelete('RESTRICT')
         })
+        //-----------------------------------------------------------------------------------------------
+        //GRANTS TABLE
+        .createTable('grants', table => {
+            table.increments('id'),
+            table.integer('user_id').notNullable().references('id').inTable('users')
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE'),
+            table.string('grant_name', 200).notNullable(),
+            table.string('grant_number').notNullable().unique(),
+            table.string('grant_status', 1).notNullable(),
+            table.binary('grant_documents'),
+            table.timestamp('created_at').notNullable(),
+            table.string('grant_type',50).notNullable()
+        })
+        //-----------------------------------------------------------------------------------------------
+        //GRANTS MODIFICATION HISTORY
+        .createTable('grants_modification_history', table => {
+            table.increments('id'),
+            table.integer('grant_id').notNullable().references('id').inTable('grants')
+                 .onUpdate('CASCADE')
+                 .onDelete('RESTRICT'),
+            table.timestamp('updated_at').notNullable(),
+            table.string('modification_description', 255)     
+        })
         //-----------------------------------------------------------------------------------------------
         //CATEGORY KEYS TABLE
         .createTable('category_keys', table => {
@@ -62,6 +87,19 @@
                  .onDelete('RESTRICT')
         })
         //-----------------------------------------------------------------------------------------------
+        //GRANTS APPLICATION TABLE.
+        .createTable('grant_applications', table => {
+            table.increments('id'),
+            table.integer('user_id').notNullable().references('id').inTable('users')
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE'),
+            table.integer('grant_id').notNullable().references('id').inTable('grants')
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE'),
+            table.timestamp('created_at').notNullable(),
+            table.binary('application_documents')
+        })
+        //----------------------------------------------------------------------------------------------
         //APPLICATION STATUS TABLE.
         .createTable('application_status', table => {
             table.increments('id'),
@@ -76,31 +114,63 @@
                  .onDelete('RESTRICT')
             table.integer('status_id').notNullable().references('id').inTable('application_status')
                  .onUpdate('CASCADE')
-                 .onDelete('RESTRICT')     
+                 .onDelete('RESTRICT'),
+            table.timestamp('created_at').notNullable()          
         })
-        //CATEGORY TABLE
-        .createTable('categories', table => {
-            table.increments('id');
-            table.string('category_name').notNullable().unique(),
-            table.string('description', 255)
-        })
+        //----------------------------------------------------------------------------------------------
+        //STATES TABLE
+        .createTable('states', table => {
+            table.increments('id'),
+            table.string('state_name', 50).unique().notNullable()
+        })
+        //CITY TABLE
+        .createTable('cities', table => {
+            table.increments('id'),
+            table.integer('state_id').notNullable().references('id').inTable('states')
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE'),
+            table.string('city_name', 100).notNullable()
+        })
+        //COUNTIES TABLE
+        .createTable('counties', table => {
+            table.increments('id'),
+            table.integer('city_id').notNullable().references('id').inTable('cities')
+                 .onUpdate('CASCADE')
+                 .onDelete('RESTRICT'),
+            table.string('county_name', 100).notNullable()     
+        })
+        .createTable('regions', table => {
+            table.increments('id'),
+            table.integer('grant_id').notNullable().references('id').inTable('grants')
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE'),
+            table.integer('state_id').notNullable().references('id').inTable('states')   
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE'),                      
+            table.integer('city_id').notNullable().references('id').inTable('cities')   
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE'),
+            table.integer('county_id').notNullable().references('id').inTable('counties')   
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE')        
+        })
       };
       
     exports.down = function(knex) {
-            return knex.schema.dropTableIfExists('alerts')
-                              .dropTableIfExists('alerts_type')
-                              .dropTableIfExists('users')
-                              .dropTableIfExists('category_keys')
-                              .dropTableIfExists('category_grants') 
-                              .dropTableIfExists('eligibility')
-                              .dropTableIfExists('eligibility_grants')  
-
-
-
-
-
-                              
+            return knex.schema.dropTableIfExists('counties')
+                              .dropTableIfExists('cities')
+                              .dropTableIfExists('states')  
+                              .dropTableIfExists('status_history')
                               .dropTableIfExists('application_status')
-                              .dropTableIfExists('categories')
-                              
+                              .dropTableIfExists('grant_applications')
+                              .dropTableIfExists('eligibility_grants')
+                              .dropTableIfExists('eligibility')
+                              .dropTableIfExists('category_grants')
+                              .dropTableIfExists('category_keys')
+                              .dropTableIfExists('grants_modification_history')
+                              .dropTableIfExists('grants')  
+                              .dropTableIfExists('alerts')   
+                              .dropTableIfExists('alerts_type')
+                              .dropTableIfExists('users') 
+                              .dropTableIfExists('regions')                             
           };
