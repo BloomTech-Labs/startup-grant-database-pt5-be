@@ -2,17 +2,17 @@ exports.up = function(knex) {
         //USER TABLE
         return knex.schema.createTable('users', table =>{
             table.increments('id'),
-            table.string('user_type', 1),
-            table.string('email').notNullable().unique(),
-            table.string('uid').notNullable().unique(),
-            table.string('first_name', 50),
-            table.string('last_name', 50),
+            table.string('user_type', 2),
+            table.string('email', 100).notNullable().unique(),
+            table.string('uid', 100).notNullable().unique(),
+            table.string('first_name', 100),
+            table.string('last_name', 100),
             table.string('telephone'),
-            table.string('department', 50),
-            table.string('organization_name', 50),
-            table.string('address_one', 50),
-            table.string('address_two', 50),
-            table.string('zip_code', 10),
+            table.string('department', 100),
+            table.string('organization_name', 100),
+            table.string('address_one', 100),
+            table.string('address_two', 100),
+            table.string('zip_code', 11),
             table.timestamp('created_at').notNullable();
         })
         //-----------------------------------------------------------------------------------------------

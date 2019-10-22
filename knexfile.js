@@ -48,26 +48,13 @@ module.exports = {
         rejectUnauthorized: false
       }
     },
-    migrations: {
-      directory: "./database/migrations"
-    }
-  },
-
-  testing: {
-    client: "pg",
-    connection: {
-      host: "localhost",
-      user: "postgres",
-      database: "grants",
-      user: "postgres",
-      password: "ert39883988"
-    },
-    useNullAsDefault: true,
-    migrations: {
-      directory: "./database/migrations"
+    
+migrations: {
+      directory: './database/migrations'
     },
     seeds: {
-      directory: "./database/seeds"
+      directory: './database/seeds'
     }
   }
+
 };
