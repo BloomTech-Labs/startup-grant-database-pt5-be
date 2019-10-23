@@ -157,10 +157,7 @@ exports.up = function(knex) {
       };
       
     exports.down = function(knex) {
-            return knex.schema.dropTableIfExists('counties')
-                              .dropTableIfExists('cities')
-                              .dropTableIfExists('states')  
-                              .dropTableIfExists('status_history')
+            return knex.schema.dropTableIfExists('status_history')
                               .dropTableIfExists('application_status')
                               .dropTableIfExists('grant_applications')
                               .dropTableIfExists('eligibility_grants')
@@ -168,9 +165,13 @@ exports.up = function(knex) {
                               .dropTableIfExists('category_grants')
                               .dropTableIfExists('category_keys')
                               .dropTableIfExists('grants_modification_history')
+                              .dropTableIfExists('regions') 
+                              .dropTableIfExists('counties') 
+                              .dropTableIfExists('cities') 
+                              .dropTableIfExists('states')
                               .dropTableIfExists('grants')  
                               .dropTableIfExists('alerts')   
                               .dropTableIfExists('alerts_type')
                               .dropTableIfExists('users') 
-                              .dropTableIfExists('regions')                             
+                                                         
           };
