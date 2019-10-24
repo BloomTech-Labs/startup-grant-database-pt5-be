@@ -1,10 +1,26 @@
-const db = require('../database/DbConfig');
+const DB = require('../database/DbConfig');
 
 module.exports = {
+  find,
+  findByEmail,
   add
 };
 
-function add() {
-  //TODO: logic to add a user if the email is not already in the db
-  //and if it is then to log user in
+//Get all the current users
+function find() {
+  return DB('users');
+}
+
+//Find User by email and return id
+function findByEmail(userEmail) {
+  return DB('users')
+    .where({ email: userEmail })
+    .select('id');
+}
+
+//Create a new user and return the id
+function add(userInfo) {
+  return DB('users')
+    .returning('id')
+    .insert(userInfo);
 }
