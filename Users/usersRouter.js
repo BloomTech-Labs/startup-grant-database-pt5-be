@@ -5,7 +5,7 @@ const DB = require('./usersModel');
 //To run the server locally install npm and express
 
 //==========================================================================
-//Create new users or log user in
+//Login user or create a new user if a current user is not found
 
 router.post('/', async (req, res) => {
   const userInfo = req.body;
@@ -33,10 +33,10 @@ router.post('/', async (req, res) => {
 //==========================================================================
 //Read/Get all users in the db
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   // res.status(200).send('Registration end point');
   try {
-    const users = DB.find();
+    const users = await DB.find();
     // console.log(users);
     res.status(201).json({ users });
   } catch (err) {
@@ -47,16 +47,20 @@ router.get('/', (req, res) => {
 //==========================================================================
 //Delete user in the db
 
-// router.post('/', (req, res) => {
-//   const { email } = req.body;
-//   try {
-//     const users = DB.findByEmail(email);
-//     console.log(users);
-//     res.status(201).json({ users });
-//   } catch (err) {
-//     res.status(400).json({ message: err });
-//   }
-// });
+router.delete('/', async (req, res) => {
+  const { email } = req.body;
+  try {
+    const delUsers = await DB.remove(email);
+    console.log(delUsers === 0);
+    if (delUsers === 0) {
+      res.status(404).json({ message: 'User not found' });
+    } else {
+      res.status(200).json({ message: 'User has been deleted' });
+    }
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
 //==========================================================================
 

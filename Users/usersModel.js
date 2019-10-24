@@ -3,7 +3,8 @@ const DB = require('../database/DbConfig');
 module.exports = {
   find,
   findByEmail,
-  add
+  add,
+  remove
 };
 
 //Get all the current users
@@ -23,4 +24,10 @@ function add(userInfo) {
   return DB('users')
     .returning('id')
     .insert(userInfo);
+}
+
+function remove(userEmail) {
+  return DB('users')
+    .where({ email: userEmail })
+    .del();
 }
