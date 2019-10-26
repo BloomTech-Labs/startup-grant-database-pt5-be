@@ -1,7 +1,7 @@
 require('dotenv').config();
 const axios = require('axios').default;
 const api = process.env.BATTUTA_API; 
-const db = require('../routes/states_model.js');
+const db = require('../../routes/states_model.js');
 
 //FUNCTION TO GET STATES DIRECTLY FROM DATABASE
 function getStates() {
