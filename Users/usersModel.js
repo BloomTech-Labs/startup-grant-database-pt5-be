@@ -4,7 +4,8 @@ module.exports = {
   find,
   findByEmail,
   add,
-  remove
+  remove,
+  updateUser
 };
 
 //Get all the current users
@@ -26,8 +27,16 @@ function add(userInfo) {
     .insert(userInfo);
 }
 
+//Delete user
 function remove(userEmail) {
   return DB('users')
     .where({ email: userEmail })
     .del();
+}
+
+//update user
+function updateUser(uid, newInfo) {
+  return DB('users')
+    .where({ id: uid })
+    .update(newInfo);
 }

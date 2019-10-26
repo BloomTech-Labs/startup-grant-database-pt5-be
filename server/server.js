@@ -1,7 +1,10 @@
 //Server
 const express = require('express');
 const server = express();
+const cors = require('cors');
+
 server.use(express.json());
+server.use(cors());
 
 //IMPORT ROUTES IN THIS SECTION
 const userRoutes = require('../Users/usersRouter');
