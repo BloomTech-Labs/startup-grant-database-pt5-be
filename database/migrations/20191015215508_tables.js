@@ -2,7 +2,7 @@ exports.up = function(knex) {
         //USER TABLE
         return knex.schema.createTable('users', table =>{
             table.increments('id'),
-            table.integer('user_type'),
+            table.string('user_type', 2),
             table.string('email', 100).notNullable().unique(),
             table.string('uid', 100).notNullable().unique(),
             table.string('first_name', 100),
@@ -90,6 +90,17 @@ exports.up = function(knex) {
                  .onDelete('RESTRICT')
         })
         //-----------------------------------------------------------------------------------------------
+        //SAVED GRANTS
+        .createTable('saved_grants', table =>{
+            table.increments('id'),
+            table.integer('user_id').notNullable().references('id').inTable('users')
+                 .onUpdate('CASCADE')
+                 .onDelete('RESTRICT'),
+            table.integer('grant_id').notNullable().references('id').inTable('grants')
+                 .onUpdate('CASCADE')
+                 .onDelete('RESTRICT')                
+         })
+         //----------------------------------------------------------------------------------------------
         //GRANTS APPLICATION TABLE.
         .createTable('grant_applications', table => {
             table.increments('id'),
@@ -163,6 +174,7 @@ exports.up = function(knex) {
             return knex.schema.dropTableIfExists('status_history')
                               .dropTableIfExists('application_status')
                               .dropTableIfExists('grant_applications')
+                              .dropTableIfExists('saved_grants')
                               .dropTableIfExists('eligibility_grants')
                               .dropTableIfExists('eligibility')
                               .dropTableIfExists('category_grants')
