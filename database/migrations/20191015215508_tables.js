@@ -2,7 +2,7 @@ exports.up = function(knex) {
         //USER TABLE
         return knex.schema.createTable('users', table =>{
             table.increments('id'),
-            table.string('user_type', 2),
+            table.integer('user_type'),
             table.string('email', 100).notNullable().unique(),
             table.string('uid', 100).notNullable().unique(),
             table.string('first_name', 100),
@@ -46,7 +46,7 @@ exports.up = function(knex) {
             table.integer('grant_status').notNullable(),
             table.string('grant_description', 255),
             table.decimal('grant_amount', 14,2),
-            table.bytea('grant_documents'),
+            table.binary('grant_documents'),
             table.timestamp('due_date'),
             table.timestamp('created_at').notNullable(),
             table.string('grant_type',50).notNullable()
