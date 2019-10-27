@@ -33,7 +33,6 @@ exports.seed = function(knex) {
         }
         return grant_batch
       }).then(function(final_object) {
-        console.log(final_object)
          return knex('grants').insert(final_object);
       }) 
 };
