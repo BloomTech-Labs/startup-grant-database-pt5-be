@@ -42,9 +42,9 @@ exports.up = function(knex) {
                  .onDelete('RESTRICT')
                  .onUpdate('CASCADE'),
             table.string('grant_title', 100).notNullable(),
-            table.string('grant_number').notNullable().unique(),
+            table.string('grant_number').notNullable(),
             table.integer('grant_status').notNullable(),
-            table.string('grant_description', 255),
+            table.text('grant_description', 'longtext'),
             table.decimal('grant_amount', 14,2),
             table.binary('grant_documents'),
             table.timestamp('due_date'),
