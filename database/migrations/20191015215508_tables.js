@@ -41,10 +41,13 @@ exports.up = function(knex) {
             table.integer('user_id').notNullable().references('id').inTable('users')
                  .onDelete('RESTRICT')
                  .onUpdate('CASCADE'),
-            table.string('grant_name', 200).notNullable(),
+            table.string('grant_title', 100).notNullable(),
             table.string('grant_number').notNullable().unique(),
             table.integer('grant_status').notNullable(),
+            table.string('grant_description', 255),
+            table.decimal('grant_amount', 14,2),
             table.binary('grant_documents'),
+            table.timestamp('due_date'),
             table.timestamp('created_at').notNullable(),
             table.string('grant_type',50).notNullable()
         })
