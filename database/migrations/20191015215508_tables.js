@@ -43,7 +43,7 @@ exports.up = function(knex) {
                  .onUpdate('CASCADE'),
             table.string('grant_title', 100).notNullable(),
             table.string('grant_number').notNullable().unique(),
-            table.string('grant_status', 20).notNullable(),
+            table.integer('grant_status').notNullable(),
             table.string('grant_description', 255),
             table.decimal('grant_amount', 14,2),
             table.bytea('grant_documents'),
