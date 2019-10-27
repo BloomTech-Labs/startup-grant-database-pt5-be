@@ -77,15 +77,15 @@ exports.up = function(knex) {
         })
         //-----------------------------------------------------------------------------------------------
         //ELEGIBILITY TABLE
-        .createTable('eligibility', table => {
+        .createTable('elegibility', table => {
             table.increments('id'),
-            table.string('eligibility_name', 100).notNullable().unique(),
-            table.string('eligibility_description', 255)
+            table.string('elegibility_name', 100).notNullable().unique(),
+            table.string('elegibility_description', 255)
         })
         //ELIGIBILITY BY GRANTS TABLE
-        .createTable('eligibility_grants', table =>{
+        .createTable('elegibility_grants', table =>{
             table.increments('id'),
-            table.integer('eligibility_id').notNullable().references('id').inTable('eligibility')
+            table.integer('elegibility_id').notNullable().references('id').inTable('elegibility')
                  .onUpdate('CASCADE')
                  .onDelete('RESTRICT')
         })
@@ -123,7 +123,7 @@ exports.up = function(knex) {
         //STATUS HISTORY
         .createTable('status_history', table => {
             table.increments('id'),
-            table.integer('grants_id').notNullable().references('id').inTable('grants')
+            table.integer('grants_id').notNullable().references('id').inTable('grant_applications')
                  .onUpdate('CASCADE')
                  .onDelete('RESTRICT')
             table.integer('status_id').notNullable().references('id').inTable('application_status')
@@ -175,8 +175,8 @@ exports.up = function(knex) {
                               .dropTableIfExists('application_status')
                               .dropTableIfExists('grant_applications')
                               .dropTableIfExists('saved_grants')
-                              .dropTableIfExists('eligibility_grants')
-                              .dropTableIfExists('eligibility')
+                              .dropTableIfExists('elegibility_grants')
+                              .dropTableIfExists('elegibility')
                               .dropTableIfExists('category_grants')
                               .dropTableIfExists('category_keys')
                               .dropTableIfExists('grants_modification_history')

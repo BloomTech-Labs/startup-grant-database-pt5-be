@@ -35,7 +35,7 @@ exports.seed = function(knex) {
         })
         const application_batch = [];
         for (let i=0; i< Object.keys(combinedArray[0]).length ; i++) {
-          const randomGrant = getGrantIdOnly[Math.floor(Math.round(Math.random() * getGrantIdOnly.length))];
+          const randomGrant = getGrantIdOnly[Math.floor(Math.random() * getGrantIdOnly.length)];
           application_batch.push(applicationObjectCreator(combinedArray[0][i]['id'] , randomGrant));
         }
         return application_batch
