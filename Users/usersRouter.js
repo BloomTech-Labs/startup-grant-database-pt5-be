@@ -26,9 +26,9 @@ router.post('/', verify, async (req, res) => {
 
   //Date format for timestamp
   var timeStamp = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth() + 1;
-  var yyyy = today.getFullYear();
+  var dd = timeStamp.getDate();
+  var mm = timeStamp.getMonth() + 1;
+  var yyyy = timeStamp.getFullYear();
   today = yyyy + '-' + mm + '-' + dd;
   //end of date
 
