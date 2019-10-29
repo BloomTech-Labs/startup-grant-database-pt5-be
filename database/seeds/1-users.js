@@ -9,7 +9,7 @@ function addUsers() {
       uid: faker.random.uuid(),
       first_name: faker.name.firstName(),
       last_name: faker.name.lastName(),
-      telephone: "",
+      telephone: "", 
       department: faker.commerce.department(),
       organization_name: faker.company.companyName(),
       address_one: faker.address.streetAddress(),
