@@ -4,7 +4,7 @@
   "description": "Backend for the Grant Application Labs",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env DB_ENV=testing jest --watch",
+    //"test": "cross-env DB_ENV=testing jest --watch",
     "server": "nodemon index.js",
     "start": "nodemon index.js"
   },
