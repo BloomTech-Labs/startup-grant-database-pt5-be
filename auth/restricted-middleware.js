@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
         // ...
         //set decoded token to body to catch the data during the next face and send it to DB
         req.body.decodedToken = decodedToken;
-        console.log('Decoded Toke from middleware: ', decodedToken);
+        // console.log('Decoded Toke from middleware: ', decodedToken);
         next();
       })
       .catch(function(error) {
@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
         res.status(401).json({ message: 'invalid Token', error });
       });
   } else {
-    //do somthing...
-    console.log('No token found in middleware');
+    // console.log('No token found in middleware');
+    res.status(500).json({ message: 'No token found', error });
   }
 };

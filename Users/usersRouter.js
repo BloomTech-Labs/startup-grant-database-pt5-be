@@ -5,10 +5,9 @@ const DB = require('./usersModel');
 //Importing the restricted middleware to verify token
 const verify = require('../auth/restricted-middleware');
 
-//To run the server locally install npm and express
-
 //==========================================================================
 //Login user or create a new user if a current user is not found
+
 router.post('/', verify, async (req, res) => {
   // console.log('Passed middleware from HTTP request: ', req.body.decodedToken);
   //Deconstructing decoded token
@@ -17,26 +16,11 @@ router.post('/', verify, async (req, res) => {
   const email = userInfo.email;
   const uid = userInfo.uid;
 
-  //TODO:
-  //
-  // [x] Pass the rest of user info life first and last name
-  // [x] FIX DATE TO USE JS FUNCTION
-  // [x] Handle errors correctly
-  // [x] Hide private keys from firebase
-
-  //Date format for timestamp
-  var timeStamp = new Date();
-  var dd = timeStamp.getDate();
-  var mm = timeStamp.getMonth() + 1;
-  var yyyy = timeStamp.getFullYear();
-  today = yyyy + '-' + mm + '-' + dd;
-  //end of date
-
   const creds = {
     first_name: name,
     email: email,
     uid: uid,
-    created_at: timeStamp
+    created_at: new Date()
   };
   // console.log(creds);
   try {
@@ -47,14 +31,16 @@ router.post('/', verify, async (req, res) => {
     //LOGIC TO SIGNUP OR LOGIN USER
     //if request is not an empty object then an account was found and the id is return
     if (`${currentUser}`) {
+      // console.log('Sign in!', currentUser, `${currentUser}`);
       res.status(200).json({ found: currentUser[0] });
       //if request is an empty object then an account is created and the id is return
     } else {
+      // console.log('Sign up!', currentUser);
       const newUser = await DB.add(creds);
       res.status(201).json({ created: newUser });
     }
   } catch (err) {
-    console.log('Error during LOGIN/SIGNUP http request', err);
+    // console.log('Error during LOGIN/SIGNUP http request', err);
     res.status(400).json({ message: err.message });
   }
 });
@@ -80,7 +66,7 @@ router.delete('/', async (req, res) => {
   const { email } = req.body;
   try {
     const delUsers = await DB.remove(email);
-    console.log(delUsers === 0);
+    // console.log(delUsers === 0);
     if (delUsers === 0) {
       res.status(404).json({ message: 'User not found' });
     } else {
