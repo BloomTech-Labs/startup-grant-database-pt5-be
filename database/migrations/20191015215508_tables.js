@@ -71,6 +71,9 @@ exports.up = function(knex) {
         //CATEGORY_GRANTS
         .createTable('category_grants', table => {
             table.increments('id'),
+            table.integer('grants_id').notNullable().references('id').inTable('grants')
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE'), 
             table.integer('category_id').notNullable().references('id').inTable('category_keys')
                  .onDelete('RESTRICT')
                  .onUpdate('CASCADE') 
@@ -83,8 +86,11 @@ exports.up = function(knex) {
             table.string('elegibility_description', 255)
         })
         //ELIGIBILITY BY GRANTS TABLE
-        .createTable('elegibility_grants', table =>{
+        .createTable('elegibility_grants', table => {
             table.increments('id'),
+            table.integer('grants_id').notNullable().references('id').inTable('grants')
+                 .onDelete('RESTRICT')
+                 .onUpdate('CASCADE'), 
             table.integer('elegibility_id').notNullable().references('id').inTable('elegibility')
                  .onUpdate('CASCADE')
                  .onDelete('RESTRICT')
