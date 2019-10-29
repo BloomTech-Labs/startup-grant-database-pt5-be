@@ -1,9 +1,15 @@
-const db = require('../../database/DbConfig.js');
+const db = require('../../database/DbConfig');
 
 module.exports = {
-    find
+    find, 
+    masterSearch
 }
 
 function find() {
-    return db('grants')
+    return db('grants');
+};
+
+
+function masterSearch() {
+    return db('grants').innerJoin('regions', 'grants.id' , 'regions.grant_id')
 }

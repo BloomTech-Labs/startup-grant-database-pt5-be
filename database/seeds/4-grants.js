@@ -31,7 +31,8 @@ exports.seed = function(knex) {
         for (let i=0; i< Object.keys(users).length ; i++) {
           grant_batch.push(grantObjectCreator(users[i]['id']));
         }
+        return grant_batch
       }).then(function(final_object) {
-         knex('grants').insert(final_object);
+         return knex('grants').insert(final_object);
       }) 
 };
