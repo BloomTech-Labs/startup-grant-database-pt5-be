@@ -8,6 +8,9 @@
     "server": "nodemon index.js",
     "start": "nodemon index.js"
   },
+  "engines": {
+    "node": "8.10.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lambda-School-Labs/startup-grant-database-pt5-be.git"
