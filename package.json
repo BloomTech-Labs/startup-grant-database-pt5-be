@@ -4,9 +4,9 @@
   "description": "Backend for the Grant Application Labs",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env DB_ENV=testing jest --watch",
-    "start": "node index.js",
-    "server": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server":"nodemon index.js",
+    "start":"node index.js"
   },
   "engines": {
     "node": "8.10.0"
