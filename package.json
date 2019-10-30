@@ -35,5 +35,6 @@
     "nodemon": "^1.19.4",
     "pg": "^7.12.1",
     "supertest": "^4.0.2"
-  }
+  },
+  "heroku-run-build-script": true
 }
