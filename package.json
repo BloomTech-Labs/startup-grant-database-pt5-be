@@ -1,12 +1,12 @@
 {
-  "name": "startup-grant-database-pt5-be",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "Backend for the Grant Application Labs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server":"nodemon index.js",
-    "start":"node index.js"
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "test": "cross-env DB_ENV=testing jest --watch"
+
   },
   "repository": {
     "type": "git",
