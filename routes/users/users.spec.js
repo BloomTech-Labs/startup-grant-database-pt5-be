@@ -2,6 +2,7 @@ const request = require("supertest");
 const server = require("../../server/server.js");
 
 // const DB = require("./user-model.js");
+//ABOVE IS TO TEST MODEL FUNCTIONS WHEN NEEDED
 
 describe("Users Testing Suite", () => {
   describe("GET to /api/users", () => {
@@ -9,6 +10,11 @@ describe("Users Testing Suite", () => {
       request(server)
         .get("/api/users")
         .expect(200);
+    });
+    it("should return data in JSON format", () => {
+      request(server)
+        .get("/api/users")
+        .expect(/json/);
     });
   });
 });
