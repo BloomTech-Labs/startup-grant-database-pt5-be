@@ -48,13 +48,24 @@ module.exports = {
         rejectUnauthorized: false
       }
     },
-    
-migrations: {
-      directory: './database/migrations'
+    migrations: {
+      directory: "./database/migrations"
     },
     seeds: {
-      directory: './database/seeds'
+      directory: "./database/seeds"
     }
+  },
+  testing: {
+    client: "sqlite3",
+    connection: {
+      database: ".data/testing.db3"
+    },
+    migrations: {
+      directory: "./database/migrations"
+    },
+    seeds: {
+      directory: "./database/seeds"
+    },
+    useNullAsDefault: true
   }
-
 };

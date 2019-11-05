@@ -1,5 +1,5 @@
 //Import firebase admin
-const firebase = require('../initializers/firebase');
+const firebase = require("../initializers/firebase");
 
 //Creating midddleware so if the token is verify successfully
 //next will be call and the authentication process will be successful
@@ -21,11 +21,11 @@ module.exports = (req, res, next) => {
       })
       .catch(function(error) {
         // Handle error
-        console.log('Error from middleware decoding token failed', error);
-        res.status(401).json({ message: 'invalid Token', error });
+        console.log("Error from middleware decoding token failed", error);
+        res.status(401).json({ message: "invalid Token", error });
       });
   } else {
     // console.log('No token found in middleware');
-    res.status(500).json({ message: 'No token found', error });
+    res.status(500).json({ message: "No token found", error });
   }
 };
