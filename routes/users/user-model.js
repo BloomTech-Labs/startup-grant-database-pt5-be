@@ -3,8 +3,6 @@ const db = require("../../database/DbConfig");
 module.exports = {
   find,
   findByUserType
-
-  
 };
 
 function find() {
@@ -15,5 +13,5 @@ function find() {
 //TYPE 0 => Granters
 //TYPE 1 => Applicants
 function findByUserType(type) {
-  return db('users').where({user_type: type});
+  return db("users").where({ user_type: type });
 }

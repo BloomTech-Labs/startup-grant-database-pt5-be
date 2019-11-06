@@ -58,14 +58,14 @@ module.exports = {
   testing: {
     client: "sqlite3",
     connection: {
-      database: ".data/testing.db3"
+      filename: ".database/testing.db3"
     },
+    useNullAsDefault: true,
     migrations: {
       directory: "./database/migrations"
     },
     seeds: {
       directory: "./database/seeds"
-    },
-    useNullAsDefault: true
+    }
   }
 };

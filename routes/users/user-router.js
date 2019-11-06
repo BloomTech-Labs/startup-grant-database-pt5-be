@@ -13,4 +13,14 @@ router.get("/", async (req, res) => {
   }
 });
 
+//BELOW WAS FOR DEBUGGING
+// router.get("/test", async (req, res) => {
+//   try {
+//     const users = await db.findByUserType("0");
+//     res.status(200).json(users);
+//   } catch (err) {
+//     res.status(500).json(err.message);
+//   }
+// });
+
 module.exports = router;
