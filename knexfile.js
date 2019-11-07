@@ -56,9 +56,16 @@ module.exports = {
     }
   },
   testing: {
-    client: "sqlite3",
+    client: "pg",
     connection: {
-      filename: ".database/testing.db3"
+      host: "ec2-174-129-252-255.compute-1.amazonaws.com",
+      database: "devhmhuq6b15ch",
+      user: "kmzzotiiduedrv",
+      password:
+        "4d786fe178ad7a77e8f2f93c417c470dc185932ea8fc9075650494052aff53c4",
+      ssl: {
+        rejectUnauthorized: false
+      }
     },
     useNullAsDefault: true,
     migrations: {
