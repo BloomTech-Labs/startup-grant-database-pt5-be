@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
 
 //==========================================================================
 //Login user or create a new user if a current user is not found
+//RETURNS THE USER ID
 
 router.post('/login', verify, async (req, res) => {
   // console.log('Passed middleware from HTTP request: ', req.body.decodedToken);
@@ -44,7 +45,7 @@ router.post('/login', verify, async (req, res) => {
     //LOGIC TO SIGNUP OR LOGIN USER
     //if request is not an empty object then an account was found and the id is return
     if (`${currentUser}`) {
-      // console.log('Sign in!', currentUser, `${currentUser}`);
+      // console.log('Sign in!', currentUser[0], `${currentUser}`);
       res.status(200).json({ found: currentUser[0] });
       //if request is an empty object then an account is created and the id is return
     } else {
@@ -77,8 +78,11 @@ router.delete('/', async (req, res) => {
 });
 
 //==========================================================================
-//Update user info ** if email and uid are the same field must be left empty
-
+//Update user info ** if email and uid are the same, field must be left empty
+//TODO:
+//During login return the id to the FE and save it in local storage
+//Then when updating take the ID from there
+//
 router.put('/:id', async (req, res) => {
   const newInfo = req.body;
   const { id } = req.params;
