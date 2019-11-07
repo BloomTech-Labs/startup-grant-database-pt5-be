@@ -36,9 +36,9 @@ function add(userInfo) {
 }
 
 //Delete user
-function remove(userEmail) {
+function remove(userId) {
   return DB('users')
-    .where({ email: userEmail })
+    .where({ id: userId })
     .del();
 }
 

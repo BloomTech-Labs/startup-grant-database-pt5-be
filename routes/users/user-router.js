@@ -45,13 +45,15 @@ router.post('/login', verify, async (req, res) => {
     //LOGIC TO SIGNUP OR LOGIN USER
     //if request is not an empty object then an account was found and the id is return
     if (`${currentUser}`) {
-      // console.log('Sign in!', currentUser[0], `${currentUser}`);
-      res.status(200).json({ found: currentUser[0] });
+      // console.log('Sign in!', currentUser[0]);
+      const id = currentUser[0].id;
+      res.status(200).json({ id: id });
       //if request is an empty object then an account is created and the id is return
     } else {
-      // console.log('Sign up!', currentUser);
       const newUser = await DB.add(creds);
-      res.status(201).json({ created: newUser });
+      // console.log('Sign up!', newUser);
+      const id = newUser[0];
+      res.status(201).json({ id: id });
     }
   } catch (err) {
     // console.log('Error during LOGIN/SIGNUP http request', err);
@@ -60,12 +62,12 @@ router.post('/login', verify, async (req, res) => {
 });
 
 //==========================================================================
-//Delete user in the db it takes the user email
+// Delete User, takes the user id
 
-router.delete('/', async (req, res) => {
-  const { email } = req.body;
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
   try {
-    const delUsers = await DB.remove(email);
+    const delUsers = await DB.remove(id);
     // console.log(delUsers === 0);
     if (delUsers === 0) {
       res.status(404).json({ message: 'User not found' });
@@ -80,16 +82,21 @@ router.delete('/', async (req, res) => {
 //==========================================================================
 //Update user info ** if email and uid are the same, field must be left empty
 //TODO:
-//During login return the id to the FE and save it in local storage
-//Then when updating take the ID from there
-//
+//Should we allow users to update their email addred?
 router.put('/:id', async (req, res) => {
   const newInfo = req.body;
   const { id } = req.params;
   try {
     const updateUser = await DB.updateUser(id, newInfo);
-    res.status(200).json({ message: updateUser });
+
+    if (updateUser === 1) {
+      console.log(updateUser, newInfo, id);
+      res.status(200).json({ message: updateUser });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
   } catch (err) {
+    console.log(newInfo, id, err);
     res.status(500).json({ message: err.message });
   }
 });
