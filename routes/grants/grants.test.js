@@ -27,4 +27,26 @@ describe("Grants Testing Suite", () => {
       expect(grants.length).not.toBe(0);
     });
   });
+  describe("masterSearch() Model Function", () => {
+    it("will return some data", async () => {
+      let results = [];
+      expect(results.length).toBe(0);
+      results = await DB.masterSearch();
+      //RETURNING 0 WILL PASS UNTIL THE STATES
+      //API IS IMPLEMENTED AND MODEL FUNCTION
+      //CAN ACTUALLY innerJoin("regions")
+      expect(results.length).toBe(0);
+    });
+  });
+});
+
+describe("Applications Testing Suite", () => {
+  describe("find() Model Function", () => {
+    it("should return some data", async () => {
+      let apps = [];
+      expect(apps.length).toBe(0);
+      apps = await DB.find();
+      expect(apps.length).not.toBe(0);
+    });
+  });
 });

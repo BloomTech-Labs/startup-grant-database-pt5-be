@@ -13,7 +13,7 @@ describe("States/Cities Testing Suite", () => {
       //BELOW SHOULD EXPECT 51 WHEN WE
       //ACTUALLY IMPLEMENT STATES API,
       //ZERO IS PASSING SO THAT WE DON'T USE OUR LIMITED
-      //AMOUNT OF REQUESTS
+      //AMOUNT OF REQUESTS TO THE API
       expect(states.length).toBe(0);
     });
   });
