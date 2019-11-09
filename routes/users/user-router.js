@@ -10,6 +10,7 @@ const verify = require('../../auth/restricted-middleware');
 
 router.get('/', async (req, res) => {
   try {
+    console.log('Getting users');
     const users = await DB.find();
     res.status(200).json(users);
   } catch (err) {
@@ -38,6 +39,7 @@ router.post('/login', verify, async (req, res) => {
   };
   // console.log(creds);
   try {
+    // console.log('Loging in');
     // console.log('User email', email);
     const currentUser = await DB.findByEmail(email);
     // console.log('CurrentUser', currentUser);
