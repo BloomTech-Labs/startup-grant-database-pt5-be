@@ -91,7 +91,7 @@ router.put('/:id', async (req, res) => {
 
     if (updateUser === 1) {
       console.log(updateUser, newInfo, id);
-      res.status(200).json({ message: updateUser });
+      res.status(201).json({ message: updateUser });
     } else {
       res.status(404).json({ message: 'User not found' });
     }
