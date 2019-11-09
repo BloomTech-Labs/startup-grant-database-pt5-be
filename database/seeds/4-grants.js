@@ -28,7 +28,8 @@ exports.seed = function(knex) {
   
       return getGranters(userType).then(function(users) {
         const grant_batch = [];
-        for (let i=0; i< Object.keys(users).length ; i++) {
+        console.log(Object.keys(users).length)
+        for (let i=0; i< (Object.keys(users).length) ; i++) {
           grant_batch.push(grantObjectCreator(users[i]['id']));
         }
         return grant_batch

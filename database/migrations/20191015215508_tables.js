@@ -143,18 +143,18 @@ exports.up = function(knex) {
             table.increments('id'),
             table.string('state_name', 50).unique().notNullable()
         })
-        //CITY TABLE
-        .createTable('cities', table => {
-            table.increments('id'),
-            table.integer('state_id').notNullable().references('id').inTable('states')
-                 .onDelete('RESTRICT')
-                 .onUpdate('CASCADE'),
-            table.string('city_name', 100).notNullable()
-        })
+     //    //CITY TABLE. THIS MIGHT BE IMPLEMENTED IN THE FUTURE
+     //    .createTable('cities', table => {
+     //        table.increments('id'),
+     //        table.integer('state_id').notNullable().references('id').inTable('states')
+     //             .onDelete('RESTRICT')
+     //             .onUpdate('CASCADE'),
+     //        table.string('city_name', 100).notNullable()
+     //    })
         //COUNTIES TABLE
         .createTable('counties', table => {
             table.increments('id'),
-            table.integer('city_id').notNullable().references('id').inTable('cities')
+            table.integer('state_id').notNullable().references('id').inTable('states')
                  .onUpdate('CASCADE')
                  .onDelete('RESTRICT'),
             table.string('county_name', 100).notNullable()     
@@ -167,9 +167,9 @@ exports.up = function(knex) {
             table.integer('state_id').notNullable().references('id').inTable('states')   
                  .onDelete('RESTRICT')
                  .onUpdate('CASCADE'),                      
-            table.integer('city_id').notNullable().references('id').inTable('cities')   
-                 .onDelete('RESTRICT')
-                 .onUpdate('CASCADE'),
+          //   table.integer('city_id').notNullable().references('id').inTable('cities')   
+          //        .onDelete('RESTRICT')
+          //        .onUpdate('CASCADE'),
             table.integer('county_id').notNullable().references('id').inTable('counties')   
                  .onDelete('RESTRICT')
                  .onUpdate('CASCADE')        
