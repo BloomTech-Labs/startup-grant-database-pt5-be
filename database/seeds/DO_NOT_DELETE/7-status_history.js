@@ -8,6 +8,8 @@ function getGrantApplications() {
   })
 }
 
+async function 
+
 //FUNCTION TO CREATE INDIVIDUAL RECORDS
 function createHistory (grant_application_id) {
   return {
