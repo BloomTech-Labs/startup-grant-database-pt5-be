@@ -22,7 +22,7 @@ module.exports = {
     client: process.env.DB_STAGING_CLIENT,
     connection: {
       host: process.env.DB_STAGING_HOST,
-      database: "d6c3e15jegg184",
+      database: process.env.DB_STAGING,
       user: process.env.DB_STAGING_USER,
       password: process.env.DB_STAGING_PASSWORD,
       ssl: {
