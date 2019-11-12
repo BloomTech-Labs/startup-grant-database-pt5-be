@@ -34,6 +34,7 @@ exports.seed = function(knex) {
         };
         return final_Batch;
       }).then(function(final_Batch) {
+        console.log(final_Batch)
           return knex('category_grants').insert(final_Batch);
     });
 };
