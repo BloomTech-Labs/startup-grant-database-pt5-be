@@ -5,5 +5,5 @@ module.exports = {
 };
 
 function find() {
-  return db("states");
+  return db("grant_applications");
 }
