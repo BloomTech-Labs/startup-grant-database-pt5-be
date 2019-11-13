@@ -10,6 +10,6 @@ function find() {
 }
 
 function findbystate(state) {
-    return db('counties').where({state});
+    return db('counties').where({state_id: state});
 }
 
