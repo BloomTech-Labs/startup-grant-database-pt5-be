@@ -84,7 +84,8 @@ router.delete("/:id", async (req, res) => {
 //==========================================================================
 //Update user info ** if email and uid are the same, field must be left empty
 //TODO:
-//Should we allow users to update their email addred?
+//1.The first page of the onbording send data to this end point
+//2.For the second page of the onbording, where that data should go?
 router.put("/:id", async (req, res) => {
   const newInfo = req.body;
   const { id } = req.params;
