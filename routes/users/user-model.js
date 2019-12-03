@@ -2,6 +2,7 @@ const DB = require("../../database/DbConfig");
 
 module.exports = {
   find,
+  findById,
   findByUserType,
   findByEmail,
   add,
@@ -12,6 +13,10 @@ module.exports = {
 //Get all users
 function find() {
   return DB("users");
+}
+
+function findById(userId) {
+  return DB("users").where({ id: userId });
 }
 
 //FUNCTION TO GET ALL USERS BY TYPE
