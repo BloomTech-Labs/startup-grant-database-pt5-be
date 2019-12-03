@@ -70,15 +70,15 @@ exports.up = function(knex) {
         //     table.string('category_description')
         // })
         //CATEGORY_GRANTS
-        .createTable('category_grants', table => {
-            table.increments('id'),
-            table.integer('grants_id').notNullable().references('id').inTable('grants')
-                 .onDelete('RESTRICT')
-                 .onUpdate('CASCADE'), 
-            table.integer('category_id').notNullable().references('id').inTable('category_keys')
-                 .onDelete('RESTRICT')
-                 .onUpdate('CASCADE') 
-        })
+        // .createTable('category_grants', table => {
+        //     table.increments('id'),
+        //     table.integer('grants_id').notNullable().references('id').inTable('grants')
+        //          .onDelete('RESTRICT')
+        //          .onUpdate('CASCADE'), 
+        //     table.integer('category_id').notNullable().references('id').inTable('category_keys')
+        //          .onDelete('RESTRICT')
+        //          .onUpdate('CASCADE') 
+        // })
         //-----------------------------------------------------------------------------------------------
         //ELEGIBILITY TABLE
         // .createTable('elegibility', table => {
@@ -87,15 +87,15 @@ exports.up = function(knex) {
         //     table.string('elegibility_description', 255)
         // })
         //ELIGIBILITY BY GRANTS TABLE
-        .createTable('elegibility_grants', table => {
-            table.increments('id'),
-            table.integer('grants_id').notNullable().references('id').inTable('grants')
-                 .onDelete('RESTRICT')
-                 .onUpdate('CASCADE'), 
-            table.integer('elegibility_id').notNullable().references('id').inTable('elegibility')
-                 .onUpdate('CASCADE')
-                 .onDelete('RESTRICT')
-        })
+        // .createTable('elegibility_grants', table => {
+        //     table.increments('id'),
+        //     table.integer('grants_id').notNullable().references('id').inTable('grants')
+        //          .onDelete('RESTRICT')
+        //          .onUpdate('CASCADE'), 
+        //     table.integer('elegibility_id').notNullable().references('id').inTable('elegibility')
+        //          .onUpdate('CASCADE')
+        //          .onDelete('RESTRICT')
+        // })
         //-----------------------------------------------------------------------------------------------
         //SAVED GRANTS
         // .createTable('saved_grants', table =>{
@@ -160,22 +160,22 @@ exports.up = function(knex) {
         //          .onDelete('RESTRICT'),
         //     table.string('county_name', 100).notNullable()     
         // })
-        .createTable('regions', table => {
-            table.increments('id'),
-            table.integer('grant_id').notNullable().references('id').inTable('grants')
-                 .onDelete('RESTRICT')
-                 .onUpdate('CASCADE'),
-            table.boolean('country_wide').notNullable().defaultTo('false')     
-            table.integer('state_id').references('id').inTable('states')   
-                 .onDelete('RESTRICT')
-                 .onUpdate('CASCADE'),                      
-          //   table.integer('city_id').notNullable().references('id').inTable('cities')   
-          //        .onDelete('RESTRICT')
-          //        .onUpdate('CASCADE'),
-            table.integer('county_id').references('id').inTable('counties')   
-                 .onDelete('RESTRICT')
-                 .onUpdate('CASCADE')        
-        })
+        // .createTable('regions', table => {
+        //     table.increments('id'),
+        //     table.integer('grant_id').notNullable().references('id').inTable('grants')
+        //          .onDelete('RESTRICT')
+        //          .onUpdate('CASCADE'),
+        //     table.boolean('country_wide').notNullable().defaultTo('false')     
+        //     table.integer('state_id').references('id').inTable('states')   
+        //          .onDelete('RESTRICT')
+        //          .onUpdate('CASCADE'),                      
+        //   //   table.integer('city_id').notNullable().references('id').inTable('cities')   
+        //   //        .onDelete('RESTRICT')
+        //   //        .onUpdate('CASCADE'),
+        //     table.integer('county_id').references('id').inTable('counties')   
+        //          .onDelete('RESTRICT')
+        //          .onUpdate('CASCADE')        
+        // })
         //CATEGORIES BY USERS
         .createTable('category_user', table => {
             table.increments('id'),
@@ -213,6 +213,6 @@ exports.up = function(knex) {
                             //   .dropTableIfExists('alerts')   
                             //   .dropTableIfExists('alerts_type')
                             //   .dropTableIfExists('users') 
-                                 .dropTableIfExists('category_user') 
-                                 .dropTableIfExists('eligibility_user')                                          
+                            //   .dropTableIfExists('category_user') 
+                            //   .dropTableIfExists('eligibility_user')                                          
           };

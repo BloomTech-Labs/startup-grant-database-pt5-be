@@ -1,14 +1,14 @@
 const db = require('../../database/DbConfig');
 
 module.exports = {
-    // find, 
+    find, 
     masterSearch
 }
 
-//Function to obtain all grants
-// function find() {
-//     return db('grants');
-// };
+// Function to obtain all grants
+function find() {
+    return db('grants');
+};
 
 //Function to obtain all grants by different parameters
 function masterSearch(state=2, counties='', amaount='', elegibility='', categories='') {
