@@ -2,6 +2,9 @@ const router = require("express").Router();
 //Connect to usersmodel
 const DB = require("./user-model");
 
+//Connects to grants_model
+const Grants = require("../grants/grants_model.js");
+
 //Importing the restricted middleware to verify token
 const verify = require("../../auth/restricted-middleware");
 
@@ -27,7 +30,9 @@ router.get("/:id", async (req, res) => {
   try {
     // console.log("Getting user info");
     const user = await DB.findById(id);
-    res.status(200).json(user);
+    //simoultaneously fetches pinned grants using async await
+    const savedGrants = await Grants.findPinnedGrants(id);
+    res.status(200).json({ accountData: user, pinnedGrants: savedGrants });
   } catch (err) {
     // console.error(err.message);
     res.status(500).json({ message: err.message });
