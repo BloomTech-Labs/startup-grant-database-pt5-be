@@ -14,11 +14,11 @@ const db = require('./grants_model.js');
 // });
 
 //GET endpoint to obtain all grants matching state. counties, amount elegibility, and categories
-router.get('/', async (req,res) => {
+router.get('/search', async (req,res) => {
     try {
-        const { state, counties, amount, elegibility, categories } = req.params;
+        const { states, counties, amount, elegibility, category } = req.params;
 
-        const grantSearch = await db.masterSearch(state, counties, amount, elegibility, categories);
+        const grantSearch = await db.masterSearch(states, counties, amount, elegibility, category);
         res.status(200).json(grantSearch);
     }
     catch (err) {
