@@ -1,16 +1,16 @@
-const router = require("express").Router();
+const router = require('express').Router();
 //Connect to usersmodel
-const DB = require("./user-model");
+const DB = require('./user-model');
 
 //Importing the restricted middleware to verify token
-const verify = require("../../auth/restricted-middleware");
+const verify = require('../../auth/restricted-middleware');
 
 //==========================================================================
 //Get all users
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    console.log("Getting users");
+    console.log('Getting users');
     const users = await DB.find();
     res.status(200).json(users);
   } catch (err) {
@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
 //==========================================================================
 // Get the user specific info based off ID for dashboard
 
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     // console.log("Getting user info");
@@ -38,7 +38,7 @@ router.get("/:id", async (req, res) => {
 //Login user or create a new user if a current user is not found
 //RETURNS THE USER ID
 
-router.post("/login", verify, async (req, res) => {
+router.post('/login', verify, async (req, res) => {
   // console.log('Passed middleware from HTTP request: ', req.body.decodedToken);
   //Deconstructing decoded token
   const userInfo = req.body.decodedToken;
@@ -81,15 +81,15 @@ router.post("/login", verify, async (req, res) => {
 //==========================================================================
 // Delete User, takes the user id
 
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const delUsers = await DB.remove(id);
     // console.log(delUsers === 0);
     if (delUsers === 0) {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
     } else {
-      res.status(200).json({ message: "User has been deleted" });
+      res.status(200).json({ message: 'User has been deleted' });
     }
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -98,9 +98,8 @@ router.delete("/:id", async (req, res) => {
 
 //==========================================================================
 //Update user info ** if email and uid are the same, field must be left empty
-//TODO:
-//Should we allow users to update their email addred?
-router.put("/:id", async (req, res) => {
+
+router.put('/:id', async (req, res) => {
   const newInfo = req.body;
   const { id } = req.params;
   try {
@@ -110,7 +109,57 @@ router.put("/:id", async (req, res) => {
       console.log(updateUser, newInfo, id);
       res.status(201).json({ message: updateUser });
     } else {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (err) {
+    console.log(newInfo, id, err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
+//=======================================================//
+//             Completing user registration
+//=======================================================//
+
+//==========================================================================
+//Post user categories
+//TODO:
+//1- Post must include user id and categories ids
+//2-Multiply categories can be post it
+router.post('/cat/:id', async (req, res) => {
+  const newCat = req.body;
+  const { id } = req.params;
+  try {
+    const addCat = await DB.updateUser(id, newCat);
+
+    if (updateUser === 1) {
+      console.log(updateUser, newInfo, id);
+      res.status(201).json({ message: updateUser });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (err) {
+    console.log(newInfo, id, err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
+//==========================================================================
+//Post user elegibility
+//TODO:
+//1- Post must include user id and elegibility ids
+//2-Multiply elegibility can be post it
+router.post('/elegibility/:id', async (req, res) => {
+  const newEleg = req.body;
+  const { id } = req.params;
+  try {
+    const addEle = await DB.updateUser(id, newEleg);
+
+    if (updateUser === 1) {
+      console.log(updateUser, newInfo, id);
+      res.status(201).json({ message: updateUser });
+    } else {
+      res.status(404).json({ message: 'User not found' });
     }
   } catch (err) {
     console.log(newInfo, id, err);
