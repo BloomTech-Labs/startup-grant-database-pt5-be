@@ -5,7 +5,8 @@ module.exports = {
     masterSearch
 }
 
-//Function to obtain all grants
+
+// Function to obtain all grants
 function find() {
     return db('grants');
 };

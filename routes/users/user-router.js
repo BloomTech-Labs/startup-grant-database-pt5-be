@@ -15,7 +15,22 @@ router.get("/", async (req, res) => {
     res.status(200).json(users);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to get users" });
+    res.status(500).json({ message: err.message });
+  }
+});
+
+//==========================================================================
+// Get the user specific info based off ID for dashboard
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    // console.log("Getting user info");
+    const user = await DB.findById(id);
+    res.status(200).json(user);
+  } catch (err) {
+    // console.error(err.message);
+    res.status(500).json({ message: err.message });
   }
 });
 
