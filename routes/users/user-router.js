@@ -20,6 +20,19 @@ router.get('/', async (req, res) => {
 });
 
 //==========================================================================
+//Get all category_user
+// router.get('/cat', async (req, res) => {
+//   try {
+//     console.log('Getting cat_users');
+//     const usersCat = await DB.findCat();
+//     res.status(200).json(usersCat);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+//==========================================================================
 // Get the user specific info based off ID for dashboard
 
 router.get('/:id', async (req, res) => {
@@ -126,20 +139,12 @@ router.put('/:id', async (req, res) => {
 //TODO:
 //1- Post must include user id and categories ids
 //2-Multiply categories can be post it
-router.post('/cat/:id', async (req, res) => {
+router.post('/cat', async (req, res) => {
   const newCat = req.body;
-  const { id } = req.params;
   try {
-    const addCat = await DB.updateUser(id, newCat);
-
-    if (updateUser === 1) {
-      console.log(updateUser, newInfo, id);
-      res.status(201).json({ message: updateUser });
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
+    const addCat = await DB.addCat(newCat);
+    res.status(201).json({ message: addCat });
   } catch (err) {
-    console.log(newInfo, id, err);
     res.status(500).json({ message: err.message });
   }
 });
@@ -149,20 +154,12 @@ router.post('/cat/:id', async (req, res) => {
 //TODO:
 //1- Post must include user id and elegibility ids
 //2-Multiply elegibility can be post it
-router.post('/elegibility/:id', async (req, res) => {
+router.post('/eli', async (req, res) => {
   const newEleg = req.body;
-  const { id } = req.params;
   try {
-    const addEle = await DB.updateUser(id, newEleg);
-
-    if (updateUser === 1) {
-      console.log(updateUser, newInfo, id);
-      res.status(201).json({ message: updateUser });
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
+    const addEle = await DB.addEle(newEleg);
+    res.status(201).json({ message: addEle });
   } catch (err) {
-    console.log(newInfo, id, err);
     res.status(500).json({ message: err.message });
   }
 });

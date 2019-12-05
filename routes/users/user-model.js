@@ -8,6 +8,7 @@ module.exports = {
   add,
   remove,
   updateUser,
+  findCat,
   addCat,
   addEle
 };
@@ -57,19 +58,23 @@ function updateUser(uid, newInfo) {
 }
 
 //=======================================================//
+//Get all users
+function findCat() {
+  return DB('category_user');
+}
 
 //Post new category
-function addCat(uid, catId) {
+function addCat(data) {
   return DB('category_user')
     .returning('id')
-    .insert(catId);
+    .insert(data);
 }
 
 //Post new elegibility
-function addEle(uid, elegibilityId) {
+function addEle(data) {
   return DB('eligibility_user')
     .returning('id')
-    .insert(elegibilityId);
+    .insert(data);
 }
 
 //=======================================================//
