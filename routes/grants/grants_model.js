@@ -5,14 +5,14 @@ module.exports = {
     masterSearch
 }
 
-
 // Function to obtain all grants
 function find() {
     return db('grants');
 };
 
 //Function to obtain all grants by different parameters
-function masterSearch(states=[], counties=[], amount=[], elegibility=[], category=[]) {
+function masterSearch(state=['Alabama' , 'Alaska'], counties='', amaount='', elegibility='', categories='') { //states='Alaska', counties=[], amount=[], elegibility=[], category=[]
+    console.log('inside mastersearch function')
         return db('grants as g').innerJoin('users AS u', 'g.user_id','u.id')
                                 .innerJoin('regions AS r', 'g.id' , 'r.grant_id')
                                 .leftJoin('states AS s', 'r.state_id','=','s.id')
@@ -54,9 +54,10 @@ function masterSearch(states=[], counties=[], amount=[], elegibility=[], categor
                                          'u.address_two',
                                          'u.zip_code'
                                 )
-                                // .where('s.state_name', '=' , states)
+                                .whereIn('s.state_name',  state)
+                                .whereIn('s.state_name',  state)
                                 // .orwhere('')
                                 .orderBy('g.id')
                                 // .whereIn('R.state_id', state)
-                                // .orwherein()                           
+                                // .orwherein()            
 };
