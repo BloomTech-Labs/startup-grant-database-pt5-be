@@ -1,14 +1,20 @@
-const db = require('../../database/DbConfig');
+const db = require("../../database/DbConfig");
 
 module.exports = {
-    find, 
-    masterSearch
-}
+  find,
+  findPinnedGrants,
+  masterSearch
+};
 
 // Function to obtain all grants
 function find() {
-    return db('grants');
-};
+  return db("grants");
+}
+
+// Function to obtain all saved grants for a specific user
+function findPinnedGrants(recipientUserId) {
+  return db("saved_grants").where({ user_id: recipientUserId });
+}
 
 //Function to obtain all grants by different parameters
 function masterSearch(state=[], counties=[], amaount=[], eligibility=[], category=[]) { 
@@ -59,3 +65,4 @@ function masterSearch(state=[], counties=[], amaount=[], eligibility=[], categor
                                 .orWhereIn('eg.grants_id',  eligibility)
                                 .orderBy('g.id')            
 };
+
