@@ -11,7 +11,7 @@ function find() {
 }
 
 //Get all counties for an specific state
-function findbystate(state) {
-    return db('counties').whereIn('state_id', state);
+function findbystate(states=[]) {
+    return db('counties').whereIn('state_id', states);
 }
 

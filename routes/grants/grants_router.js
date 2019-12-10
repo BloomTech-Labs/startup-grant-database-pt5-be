@@ -16,9 +16,10 @@ router.get('/', async (req,res) => {
 //GET endpoint to obtain all grants matching state. counties, amount elegibility, and categories
 router.get('/search', async (req,res) => {
     try {
-        const { states, counties, amount, elegibility, category } = req.params;
+        console.log('My request', req.query)
+        const { state, counties, amount, eligibility, category } = req.query;
 
-        const grantSearch = await db.masterSearch(states, counties, amount, elegibility, category);
+        const grantSearch = await db.masterSearch(state, counties, amount, eligibility, category);
         res.status(200).json(grantSearch);
     }
     catch (err) {

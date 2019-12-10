@@ -19,6 +19,7 @@ router.get('/states', async (req,res) => {
         const queryParams = req.query.state;
         //Converting id to array in case there is a single state parameter in the query
         var id = typeof(queryParams) === 'string' ? queryParams.split() : queryParams;
+        console.log('my id', id)
         const counties = await db.findbystate(id);
         res.status(200).json(counties);
     }
