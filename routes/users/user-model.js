@@ -10,7 +10,10 @@ module.exports = {
   updateUser,
   findCat,
   addCat,
-  addEle
+  removeCat,
+  findEli,
+  addEli,
+  removeEli
 };
 
 //Get all users
@@ -57,8 +60,8 @@ function updateUser(uid, newInfo) {
     .update(newInfo);
 }
 
-//=======================================================//
-//Get all users
+//====================CAT===================================//
+//Get all users cat
 function findCat() {
   return DB('category_user');
 }
@@ -70,11 +73,29 @@ function addCat(data) {
     .insert(data);
 }
 
+//Delete user cat
+function removeCat(userId) {
+  return DB('category_user')
+    .where({ user_id: userId })
+    .del();
+}
+//=====================Eli==================================//
+//Get all users eli
+function findEli() {
+  return DB('eligibility_user');
+}
+
 //Post new elegibility
-function addEle(data) {
+function addEli(data) {
   return DB('eligibility_user')
     .returning('id')
     .insert(data);
 }
 
+//Delete user cat
+function removeEli(userId) {
+  return DB('eligibility_user')
+    .where({ user_id: userId })
+    .del();
+}
 //=======================================================//
