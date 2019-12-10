@@ -5,11 +5,13 @@ module.exports = {
     findbystate
 }
 
+//Get all Counties
 function find() {
     return db('counties');
 }
 
-function findbystate(state) {
-    return db('counties').whereIn('state_id', state);
+//Get all counties for an specific state
+function findbystate(states=[]) {
+    return db('counties').whereIn('state_id', states);
 }
 

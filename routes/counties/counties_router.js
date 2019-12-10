@@ -14,12 +14,12 @@ router.get('/', async (req,res) => {
 })
 
 //Get Counties by state
-router.get('/test', async (req,res) => {
+router.get('/states', async (req,res) => {
     try {
-        const queryParams = req.query.array;
+        const queryParams = req.query.state;
+        //Converting id to array in case there is a single state parameter in the query
         var id = typeof(queryParams) === 'string' ? queryParams.split() : queryParams;
-        
-        // let queryAsArray = id.map(Number)
+        console.log('my id', id)
         const counties = await db.findbystate(id);
         res.status(200).json(counties);
     }
