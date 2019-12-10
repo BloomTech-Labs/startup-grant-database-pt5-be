@@ -36,13 +36,13 @@ function findByUserType(type) {
 function findByEmail(userEmail) {
   return DB('users')
     .where({ email: userEmail })
-    .select('id');
+    .select('id', 'user_type');
 }
 
 //Create a new user and return the id
 function add(userInfo) {
   return DB('users')
-    .returning('id')
+    .returning('*')
     .insert(userInfo);
 }
 

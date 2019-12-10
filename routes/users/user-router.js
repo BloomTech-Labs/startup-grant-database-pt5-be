@@ -88,15 +88,17 @@ router.post('/login', verify, async (req, res) => {
     //LOGIC TO SIGNUP OR LOGIN USER
     //if request is not an empty object then an account was found and the id is return
     if (`${currentUser}`) {
-      // console.log('Sign in!', currentUser[0]);
+      // console.log('Sign in!', currentUser);
       const id = currentUser[0].id;
-      res.status(200).json({ id: id });
+      const user_type = currentUser[0].user_type;
+      res.status(200).json({ id: id, user_type: user_type });
       //if request is an empty object then an account is created and the id is return
     } else {
       const newUser = await DB.add(creds);
       // console.log('Sign up!', newUser);
-      const id = newUser[0];
-      res.status(201).json({ id: id });
+      const id = newUser[0].id;
+      const user_type = newUser[0].user_type;
+      res.status(201).json({ id: id, user_type: user_type });
     }
   } catch (err) {
     // console.log('Error during LOGIN/SIGNUP http request', err);
