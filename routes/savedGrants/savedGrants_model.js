@@ -8,14 +8,17 @@ module.exports = {
 
 // Get all saved grants
 function find() {
-  return DB('saved_grants');
+  return DB('saved_grants')
+    .join('grants', 'saved_grants.grant_id', '=', 'grants.id')
+    .select('grants.id', 'grant_title');
 }
 
 // Get all saved grants for specific user
 function findById(id) {
   return DB('saved_grants')
-    .where({ user_id: id })
-    .select('grant_id');
+    .join('grants', 'saved_grants.grant_id', '=', 'grants.id')
+    .where({ 'saved_grants.user_id': id })
+    .select('*');
 }
 
 // Function for user to save grants for dashboard

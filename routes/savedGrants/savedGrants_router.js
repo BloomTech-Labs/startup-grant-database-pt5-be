@@ -3,11 +3,11 @@ const router = require('express').Router();
 const DB = require('./savedGrants_model');
 
 //==========================================================================
-// Get all saved grants
+// Get all saved grants (All users)
 router.get('/', async (req, res) => {
   try {
-    const allGrants = DB.find();
-    res.status(200).json(allGrants);
+    const allGrants = await DB.find();
+    res.status(200).json({ message: 'Success!', allGrants });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -18,8 +18,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const allMyGrants = DB.findById(id);
-
+    const allMyGrants = await DB.findById(id);
     res.status(200).json(allMyGrants);
   } catch (err) {
     res.status(500).json({ message: err.message });
