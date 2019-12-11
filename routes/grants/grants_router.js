@@ -14,16 +14,25 @@ const db = require('./grants_model.js');
 // });
 
 //GET endpoint to obtain all grants matching state. counties, amount elegibility, and categories
-router.get('/', async (req,res) => {
-    try {
-        const { state, counties, amount, elegibility, categories } = req.params;
+router.get('/', async (req, res) => {
+  try {
+    const { state, counties, amount, elegibility, categories } = req.params;
 
-        const grantSearch = await db.masterSearch(state, counties, amount, elegibility, categories);
-        res.status(200).json(grantSearch);
-    }
-    catch (err) {
-        res.status(500).json({Message: 'There was an error with your request', Error: err.message});
-    }
-})
+    const grantSearch = await db.masterSearch(
+      state,
+      counties,
+      amount,
+      elegibility,
+      categories
+    );
+    res.status(200).json(grantSearch);
+  } catch (err) {
+    res.status(500).json({
+      Message: 'There was an error with your request',
+      Error: err.message
+    });
+  }
+});
+
 
 module.exports = router;
