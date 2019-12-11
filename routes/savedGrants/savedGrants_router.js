@@ -40,4 +40,22 @@ router.post('/', async (req, res) => {
 });
 
 //==========================================================================
+// Delete saved grants
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedGrant = await DB.remove(id);
+
+    if (deletedGrant) {
+      res.status(200).json({ message: 'Deleted', deletedGrant });
+    } else {
+      res.status(404).json({ message: 'No grant found with the provided ID.' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+//==========================================================================
+
 module.exports = router;
