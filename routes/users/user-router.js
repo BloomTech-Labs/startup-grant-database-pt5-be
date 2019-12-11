@@ -36,6 +36,19 @@ router.get('/', async (req, res) => {
 // });
 
 //==========================================================================
+//Get all category_user
+// router.get('/eli', async (req, res) => {
+//   try {
+//     console.log('Getting cat_users');
+//     const usersCat = await DB.findEli();
+//     res.status(200).json(usersCat);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+//==========================================================================
 // Get the user specific info based off ID for dashboard
 
 router.get('/:id', async (req, res) => {
@@ -80,15 +93,17 @@ router.post('/login', verify, async (req, res) => {
     //LOGIC TO SIGNUP OR LOGIN USER
     //if request is not an empty object then an account was found and the id is return
     if (`${currentUser}`) {
-      // console.log('Sign in!', currentUser[0]);
+      // console.log('Sign in!', currentUser);
       const id = currentUser[0].id;
-      res.status(200).json({ id: id });
+      const user_type = currentUser[0].user_type;
+      res.status(200).json({ id: id, user_type: user_type });
       //if request is an empty object then an account is created and the id is return
     } else {
       const newUser = await DB.add(creds);
       // console.log('Sign up!', newUser);
-      const id = newUser[0];
-      res.status(201).json({ id: id });
+      const id = newUser[0].id;
+      const user_type = newUser[0].user_type;
+      res.status(201).json({ id: id, user_type: user_type });
     }
   } catch (err) {
     // console.log('Error during LOGIN/SIGNUP http request', err);
@@ -155,6 +170,18 @@ router.post('/cat', async (req, res) => {
 });
 
 //==========================================================================
+//Delete user categories
+router.delete('/cat/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const addCat = await DB.removeCat(id);
+    res.status(201).json({ message: addCat });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+//==========================================================================
 //Post user elegibility
 //TODO:
 //1- Post must include user id and elegibility ids
@@ -162,8 +189,20 @@ router.post('/cat', async (req, res) => {
 router.post('/eli', async (req, res) => {
   const newEleg = req.body;
   try {
-    const addEle = await DB.addEle(newEleg);
+    const addEle = await DB.addEli(newEleg);
     res.status(201).json({ message: addEle });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+//==========================================================================
+//Delete user categories
+router.delete('/eli/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const addCat = await DB.removeEli(id);
+    res.status(201).json({ message: addCat });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
