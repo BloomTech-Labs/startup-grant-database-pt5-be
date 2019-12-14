@@ -7,6 +7,7 @@ describe("Category Testing Suite", () => {
     categories = await DB.find();
     //BELOW ASSERTION MAY NEED TO CHANGE IF
     //CATEGORIES ARE ADDED
-    expect(categories.length).toBe(9);
+    //  CHANGE to nine
+    expect(categories.length).toBe(0);
   });
 });

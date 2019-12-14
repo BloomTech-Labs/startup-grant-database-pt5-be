@@ -5,5 +5,6 @@ module.exports = {
 };
 
 function find() {
+  console.log("Getting grant apps!");
   return db("grant_applications");
 }

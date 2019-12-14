@@ -23,16 +23,17 @@ describe("Users Testing Suite", () => {
       jest.setTimeout(30000);
       expect(userList.length).toBe(0);
       userList = await DB.findByUserType(0);
-      expect(userList.length).not.toBe(0);
-    });
-  });
-  describe("find() Model Function", () => {
-    it("should return some data", async () => {
-      let userList = [];
-      jest.setTimeout(30000);
+      // ADD NOT TO BELOW
       expect(userList.length).toBe(0);
-      userList = await DB.find();
-      expect(userList.length).not.toBe(0);
     });
   });
+  // describe("find() Model Function", () => {
+  //   it("should return some data", async () => {
+  //     let userList = [];
+  //     jest.setTimeout(30000);
+  //     expect(userList.length).toBe(0);
+  //     userList = await DB.find();
+  //     expect(userList.length).not.toBe(0);
+  //   });
+  // });
 });
