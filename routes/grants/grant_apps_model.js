@@ -1,10 +1,14 @@
 const db = require("../../database/DbConfig.js");
 
 module.exports = {
-  find
+  find,
+  findById
 };
 
 function find() {
-  console.log("Getting grant apps!");
   return db("grant_applications");
+}
+
+function findById(recipientId) {
+  return db("grant_applications").where({ id: recipientId });
 }
