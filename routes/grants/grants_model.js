@@ -3,7 +3,8 @@ const db = require("../../database/DbConfig");
 module.exports = {
   find,
   findPinnedGrants,
-  masterSearch
+  masterSearch,
+  add
 };
 
 // Function to obtain all grants
@@ -146,4 +147,11 @@ function masterSearch(
       // .andWhere("g.grant_amount", "<", maxAmount)
       .orderBy("g.id")
   );
+}
+
+// function to add a new grant 
+function add(grantInfo) {
+  return db('grants')
+    .returning('*')
+    .insert(grantInfo);
 }
