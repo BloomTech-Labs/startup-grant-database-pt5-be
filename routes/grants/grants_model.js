@@ -5,7 +5,9 @@ module.exports = {
   findById,
   findPinnedGrants,
   masterSearch,
-  updateGrant
+  updateGrant,
+  lastModify,
+  getLastModify
 };
 
 // Function to obtain all grants
@@ -23,12 +25,24 @@ function findById(id) {
   return db('grants').where({ id: id });
 }
 
+//==========================================================================
 //Update/edit grants
 function updateGrant(id, data) {
   return db('grants')
     .where({ id: id })
     .update(data);
 }
+
+//Last modify
+function lastModify(data) {
+  return db('grants_modification_history').insert(data);
+}
+
+//Last modify
+function getLastModify() {
+  return db('grants_modification_history');
+}
+//==========================================================================
 
 //Function to obtain all grants by different parameters
 function masterSearch(

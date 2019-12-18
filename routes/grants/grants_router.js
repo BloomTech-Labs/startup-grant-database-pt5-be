@@ -3,6 +3,17 @@ const router = express.Router();
 const db = require('./grants_model.js');
 
 //==========================================================================
+//GET last modify
+// router.get('/mod', async (req, res) => {
+//   try {
+//     const grantResult = await db.getLastModify();
+//     res.status(200).json(grantResult);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+//==========================================================================
 //GET endpoint to ontain all grants
 
 router.get('/', async (req, res) => {
@@ -77,10 +88,19 @@ router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const newData = req.body;
 
+  //Date to pass to last modified
+  const data = {
+    grant_id: id,
+    updated_at: new Date(),
+    modification_description: newData
+  };
+
   try {
     const updateGrant = await db.updateGrant(id, newData);
     if (updateGrant === 1) {
-      console.log('Updated');
+      //If succesful data will be also pass to last mod
+      const lastMod = await db.lastModify(data);
+      // console.log('Modified', lastMod);
       res.status(201).json({ message: updateGrant });
     } else {
       console.log('Not Found');
