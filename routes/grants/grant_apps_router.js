@@ -23,4 +23,14 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  const app = req.body;
+  try {
+    const newApplication = await DB.add(app);
+    res.status(201).json(newApplication);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
 module.exports = router;
