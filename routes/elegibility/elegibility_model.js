@@ -1,9 +1,14 @@
-const db = require('./../../database/DbConfig.js');
+const db = require("./../../database/DbConfig.js");
 
 module.exports = {
-    find
-}
+  find,
+  findById
+};
 
 function find() {
-    return db('elegibility');
+  return db("elegibility");
+}
+
+function findById(userId) {
+  return db("elegibility").where({ id: userId });
 }
