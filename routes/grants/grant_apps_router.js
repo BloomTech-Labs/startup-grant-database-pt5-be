@@ -33,4 +33,14 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/statuses", async (req, res) => {
+  const statusEntry = req.body;
+  try {
+    const status = await DB.createStatus(statusEntry);
+    res.status(201).json(status);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
 module.exports = router;

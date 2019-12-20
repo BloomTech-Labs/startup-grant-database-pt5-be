@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const db = require('./grants_model.js');
+const db = require("./grants_model.js");
 
 //==========================================================================
 //GET last modify
@@ -16,7 +16,7 @@ const db = require('./grants_model.js');
 //==========================================================================
 //GET endpoint to ontain all grants
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const grantResult = await db.find();
     res.status(200).json(grantResult);
@@ -25,10 +25,20 @@ router.get('/', async (req, res) => {
   }
 });
 
+// POST TO CREATE A NEW GRANT
+router.post("/", async (req, res) => {
+  const grant = req.body;
+  try {
+    const newGrant = await db.add(grant);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
 //==========================================================================
 //GET grant by id
 
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const grantResult = await db.findById(id);
@@ -41,7 +51,7 @@ router.get('/:id', async (req, res) => {
 //==========================================================================
 //GET endpoint to obtain all grants matching state. counties, amount elegibility, and categories
 
-router.get('/search', async (req, res) => {
+router.get("/search", async (req, res) => {
   try {
     const {
       state,
@@ -52,7 +62,7 @@ router.get('/search', async (req, res) => {
       category
     } = req.query;
     console.log(
-      'minimum',
+      "minimum",
       minimumAmount,
       state,
       counties,
@@ -75,7 +85,7 @@ router.get('/search', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      Message: 'There was an error with your request',
+      Message: "There was an error with your request",
       Error: err.message
     });
   }
@@ -84,7 +94,7 @@ router.get('/search', async (req, res) => {
 //==========================================================================
 //Update grant post
 
-router.put('/:id', async (req, res) => {
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const newData = req.body;
 
@@ -103,11 +113,11 @@ router.put('/:id', async (req, res) => {
       // console.log('Modified', lastMod);
       res.status(201).json({ message: updateGrant });
     } else {
-      console.log('Not Found');
-      res.status(404).json({ message: 'No grant found under id' });
+      console.log("Not Found");
+      res.status(404).json({ message: "No grant found under id" });
     }
   } catch (err) {
-    console.log('Error', err);
+    console.log("Error", err);
     res.status(500).json({ message: err.message });
   }
 });

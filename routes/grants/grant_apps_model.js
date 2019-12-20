@@ -3,7 +3,8 @@ const db = require("../../database/DbConfig.js");
 module.exports = {
   find,
   findById,
-  add
+  add,
+  createStatus
 };
 
 // returns all grants
@@ -19,4 +20,10 @@ function findById(recipientId) {
 // creates a new row in the grants_applications table
 function add(application) {
   return db("grant_applications").insert(application);
+}
+
+// BELOW ENDPOINT SHOULD NEVER BE HIT MORE THAN 3 TIMES
+
+function createStatus(status) {
+  return db("application_status").insert(status);
 }
