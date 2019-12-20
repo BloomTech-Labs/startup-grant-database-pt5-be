@@ -81,7 +81,19 @@ router.get('/search', async (req, res) => {
   }
 });
 
-//==========================================================================
+
+router.post('/', async (req,res) => {
+  const grant_info = req.body
+  try{
+    const new_grant = await db.add(grant_info);
+    res.status(200).json(new_grant)
+  } catch(err){
+      console.error(err)
+      res.status(500).json(err.message)   
+  }
+})
+=======
+
 //Update grant post
 
 router.put('/:id', async (req, res) => {
@@ -113,5 +125,6 @@ router.put('/:id', async (req, res) => {
 });
 
 //==========================================================================
+
 
 module.exports = router;

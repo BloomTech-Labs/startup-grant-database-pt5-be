@@ -5,6 +5,7 @@ module.exports = {
   findById,
   findPinnedGrants,
   masterSearch,
+  add,
   updateGrant,
   lastModify,
   getLastModify
@@ -174,4 +175,11 @@ function masterSearch(
       // .andWhere("g.grant_amount", "<", maxAmount)
       .orderBy('g.id')
   );
+}
+
+// function to add a new grant 
+function add(grantInfo) {
+  return db('grants')
+    .returning('*')
+    .insert(grantInfo);
 }
