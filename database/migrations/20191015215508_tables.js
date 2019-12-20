@@ -94,6 +94,7 @@ exports.up = function(knex) {
           table.string("category_description");
       })
       //CATEGORY_GRANTS
+      // INTERMEDIARY TABLE FOR NORMALIZED DATA
       .createTable("category_grants", table => {
         table.increments("id"),
           table
@@ -322,7 +323,9 @@ exports.down = function(knex) {
     .dropTableIfExists("grant_applications")
     .dropTableIfExists("saved_grants")
     .dropTableIfExists("elegibility_grants")
+    .dropTableIfExists("eligibility_user")
     .dropTableIfExists("elegibility")
+    .dropTableIfExists("category_user")
     .dropTableIfExists("category_grants")
     .dropTableIfExists("category_keys")
     .dropTableIfExists("grants_modification_history")
@@ -333,7 +336,5 @@ exports.down = function(knex) {
     .dropTableIfExists("grants")
     .dropTableIfExists("alerts")
     .dropTableIfExists("alerts_type")
-    .dropTableIfExists("users")
-    .dropTableIfExists("category_user")
-    .dropTableIfExists("eligibility_user");
+    .dropTableIfExists("users");
 };
