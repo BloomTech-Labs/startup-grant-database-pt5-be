@@ -1,22 +1,52 @@
-const db = require("../../database/DbConfig");
+const db = require('../../database/DbConfig');
 
 module.exports = {
   find,
+  findById,
   findPinnedGrants,
-  masterSearch
+  masterSearch,
+  add,
+  updateGrant,
+  lastModify,
+  getLastModify
 };
 
 // Function to obtain all grants
 function find() {
-  return db("grants");
+  return db('grants');
 }
 
 // Function to obtain all saved grants for a specific user
 function findPinnedGrants(recipientUserId) {
-  return db("saved_grants").where({ user_id: recipientUserId });
+  return db('saved_grants').where({ user_id: recipientUserId });
 }
 
+//Get grant by ID
+function findById(id) {
+  return db('grants').where({ id: id });
+}
+
+//==========================================================================
+//Update/edit grants
+function updateGrant(id, data) {
+  return db('grants')
+    .where({ id: id })
+    .update(data);
+}
+
+//Last modify
+function lastModify(data) {
+  return db('grants_modification_history').insert(data);
+}
+
+//Last modify
+function getLastModify() {
+  return db('grants_modification_history');
+}
+//==========================================================================
+
 //Function to obtain all grants by different parameters
+
 function masterSearch(state = [], counties = [], minAmount=0,  maxAmount=0, eligibility = [], category = []) {
   
    // variable to control if search is combined with State and County 
@@ -26,7 +56,6 @@ function masterSearch(state = [], counties = [], minAmount=0,  maxAmount=0, elig
   const minAmountToNumericArray = minAmount // parseFloa(minAmount); 
   const maxAmountToNumericArray =  maxAmount;
 
-console.log('my max and min values', maxAmountToNumericArray , minAmountToNumericArray)
   if (state.length === 0 && 
       counties.length === 0 && 
       minAmountToNumericArray === 0 &&
@@ -45,16 +74,16 @@ console.log('my max and min values', maxAmountToNumericArray , minAmountToNumeri
   }
   
   return (
-    db("grants as g")
-      .innerJoin("users AS u", "g.user_id", "u.id")
-      .innerJoin("regions AS r", "g.id", "r.grant_id")
-      .leftJoin("states AS s", "r.state_id", "=", "s.id")
-      .leftJoin("counties AS c", "r.county_id", "c.id")
-      .innerJoin("elegibility_grants AS eg", "g.id", "eg.grants_id")
-      .innerJoin("elegibility AS e", "e.id", "eg.elegibility_id")
-      .innerJoin("category_grants AS cg", "g.id", "cg.grants_id")
-      .innerJoin("category_keys AS ck", "ck.id", "cg.category_id")
-      .leftJoin("grants_modification_history AS gm", "gm.grant_id", "g.id")
+    db('grants as g')
+      .innerJoin('users AS u', 'g.user_id', 'u.id')
+      .innerJoin('regions AS r', 'g.id', 'r.grant_id')
+      .leftJoin('states AS s', 'r.state_id', '=', 's.id')
+      .leftJoin('counties AS c', 'r.county_id', 'c.id')
+      .innerJoin('elegibility_grants AS eg', 'g.id', 'eg.grants_id')
+      .innerJoin('elegibility AS e', 'e.id', 'eg.elegibility_id')
+      .innerJoin('category_grants AS cg', 'g.id', 'cg.grants_id')
+      .innerJoin('category_keys AS ck', 'ck.id', 'cg.category_id')
+      .leftJoin('grants_modification_history AS gm', 'gm.grant_id', 'g.id')
       .select(
         "g.id",
         "g.grant_title",
@@ -79,16 +108,16 @@ console.log('my max and min values', maxAmountToNumericArray , minAmountToNumeri
         db.raw("array_agg(DISTINCT gm.modification_description) as history") //json_agg(to_chart(gm.updated_at, "MM:DD:YYYY"))
       )
       .groupBy(
-        "g.id",
-        "u.first_name",
-        "u.last_name",
-        "u.email",
-        "u.telephone",
-        "u.department",
-        "u.organization_name",
-        "u.address_one",
-        "u.address_two",
-        "u.zip_code"
+        'g.id',
+        'u.first_name',
+        'u.last_name',
+        'u.email',
+        'u.telephone',
+        'u.department',
+        'u.organization_name',
+        'u.address_one',
+        'u.address_two',
+        'u.zip_code'
       )
       .whereIn("s.id", state)
       .orWhereIn("c.id", counties)
@@ -100,3 +129,12 @@ console.log('my max and min values', maxAmountToNumericArray , minAmountToNumeri
       .orderBy("g.id")
   );
 }
+
+
+// function to add a new grant 
+function add(grantInfo) {
+  return db('grants')
+    .returning('*')
+    .insert(grantInfo);
+}
+
