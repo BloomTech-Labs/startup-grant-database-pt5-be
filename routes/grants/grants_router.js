@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
 });
 
 //==========================================================================
-//GET grant by id
+//GET grants by user ID
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
@@ -71,12 +71,10 @@ router.get("/search", async (req, res) => {
     );
     res.status(200).json(grantSearch);
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        Message: "There was an error with your request",
-        Error: err.message
-      });
+    res.status(500).json({
+      Message: "There was an error with your request",
+      Error: err.message
+    });
   }
 });
 

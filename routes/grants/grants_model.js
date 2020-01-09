@@ -22,9 +22,9 @@ function findPinnedGrants(recipientUserId) {
   return db("saved_grants").where({ user_id: recipientUserId });
 }
 
-//Get grant by ID
-function findById(id) {
-  return db("grants").where({ id: id });
+// Get grants by grantor ID for dashboard
+function findById(userId) {
+  return db("grants").where({ user_id: userId });
 }
 
 // Creates new grant
