@@ -159,8 +159,16 @@ exports.up = function(knex) {
             .onUpdate("CASCADE")
             .onDelete("RESTRICT");
       })
+      // STATUS NEEDS TO GO UP FIRST WHEN MIGRATING
+      .createTable("application_status", table => {
+        table.increments("id"),
+          table
+            .string("status_name", 15)
+            .notNullable()
+            .unique();
+      })
       //----------------------------------------------------------------------------------------------
-      //GRANTS APPLICATION TABLE.
+      //GRANTS APPLICATION TABLE
       .createTable("grant_applications", table => {
         table.increments("id"),
           table
@@ -192,15 +200,7 @@ exports.up = function(knex) {
         // table.binary("application_documents");
       })
       //----------------------------------------------------------------------------------------------
-      //APPLICATION STATUS TABLE.
-      .createTable("application_status", table => {
-        table.increments("id"),
-          table
-            .string("status_name", 15)
-            .notNullable()
-            .unique();
-        // table.string("status_description", 255);
-      })
+
       // STATUS HISTORY
       .createTable("status_history", table => {
         table.increments("id"),
@@ -319,8 +319,8 @@ exports.up = function(knex) {
 exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists("status_history")
-    .dropTableIfExists("application_status")
     .dropTableIfExists("grant_applications")
+    .dropTableIfExists("application_status")
     .dropTableIfExists("saved_grants")
     .dropTableIfExists("elegibility_grants")
     .dropTableIfExists("eligibility_user")
