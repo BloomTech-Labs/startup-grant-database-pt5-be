@@ -57,7 +57,7 @@ var stateFilterOnly = false;
   const maxAmountToNumericArray =  maxAmount;
 
   if (state.length === 0 && 
-      counties.length === 0 && 
+      // counties.length === 0 && 
       minAmountToNumericArray === 0 &&
       maxAmountToNumericArray === 0 &&
       eligibility.length === 0 && 
@@ -124,9 +124,9 @@ var stateFilterOnly = false;
       // .orWhereIn("c.id", counties)
       .orWhereIn("cg.grants_id", category)
       .orWhereIn("eg.grants_id", eligibility)
-      // .orWhere(function() {
-      //   this.where("g.grant_amount", ">", minAmountToNumericArray).andWhere("g.grant_amount", "<", maxAmountToNumericArray);
-      // })
+      .orWhere(function() {
+        this.where("g.grant_amount", ">", minAmountToNumericArray).andWhere("g.grant_amount", "<", maxAmountToNumericArray);
+      })
       .orderBy("g.id")
   );
 }
