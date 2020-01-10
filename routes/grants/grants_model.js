@@ -79,7 +79,6 @@ var stateFilterOnly = false;
         myStates.push(i);
       }
      state = myStates; 
-     console.log('My States', state)
   }
   
   return (
@@ -132,9 +131,9 @@ var stateFilterOnly = false;
       // .orWhereIn("c.id", counties)
       .orWhereIn("cg.grants_id", category)
       .orWhereIn("eg.grants_id", eligibility)
-      // .orWhere(function() {
-      //   this.where("g.grant_amount", ">", minAmountToNumericArray).andWhere("g.grant_amount", "<", maxAmountToNumericArray);
-      // })
+      .orWhere(function() {
+        this.where("g.grant_amount", ">", minAmountToNumericArray).andWhere("g.grant_amount", "<", maxAmountToNumericArray);
+      })
       .orderBy("g.id")
   );
 }
