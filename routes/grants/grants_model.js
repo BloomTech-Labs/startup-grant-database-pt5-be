@@ -64,7 +64,7 @@ var stateFilterOnly = false;
 
   if (
     (state.length === 0 &&
-      counties.length === 0 &&
+      //counties.length === 0 &&
       minAmountToNumericArray === 0 &&
       maxAmountToNumericArray === 0 &&
       eligibility.length === 0 &&
