@@ -47,10 +47,10 @@ function getLastModify() {
 
 //Function to obtain all grants by different parameters
 
-function masterSearch(state = [], counties = [], minAmount=0,  maxAmount=0, eligibility = [], category = []) {
+function masterSearch(state = [],  minAmount=0,  maxAmount=0, eligibility = [], category = []) { //counties = [],
   
    // variable to control if search is combined with State and County 
-   var stateFilterOnly = false;
+var stateFilterOnly = false;
 
 //CONVERTING STRING ARRAYS FOR minAmount AND maxAmount TO NUMERIC ARRAYS   
   const minAmountToNumericArray = minAmount // parseFloa(minAmount); 
@@ -71,6 +71,7 @@ function masterSearch(state = [], counties = [], minAmount=0,  maxAmount=0, elig
         myStates.push(i);
       }
      state = myStates; 
+     console.log('My States', state)
   }
   
   return (
@@ -78,7 +79,7 @@ function masterSearch(state = [], counties = [], minAmount=0,  maxAmount=0, elig
       .innerJoin('users AS u', 'g.user_id', 'u.id')
       .innerJoin('regions AS r', 'g.id', 'r.grant_id')
       .leftJoin('states AS s', 'r.state_id', '=', 's.id')
-      .leftJoin('counties AS c', 'r.county_id', 'c.id')
+      // .leftJoin('counties AS c', 'r.county_id', 'c.id')
       .innerJoin('elegibility_grants AS eg', 'g.id', 'eg.grants_id')
       .innerJoin('elegibility AS e', 'e.id', 'eg.elegibility_id')
       .innerJoin('category_grants AS cg', 'g.id', 'cg.grants_id')
@@ -102,7 +103,7 @@ function masterSearch(state = [], counties = [], minAmount=0,  maxAmount=0, elig
         "u.address_two",
         "u.zip_code",
         db.raw("array_agg(DISTINCT s.state_name) as states"),
-        db.raw("array_agg(DISTINCT c.county_name) as counties"),
+        // db.raw("array_agg(DISTINCT c.county_name) as counties"),
         db.raw("array_agg(DISTINCT e.elegibility_name) as elegibilities"),
         db.raw("array_agg(DISTINCT ck.category_name) as categories"),
         db.raw("array_agg(DISTINCT gm.modification_description) as history") //json_agg(to_chart(gm.updated_at, "MM:DD:YYYY"))
@@ -120,12 +121,12 @@ function masterSearch(state = [], counties = [], minAmount=0,  maxAmount=0, elig
         'u.zip_code'
       )
       .whereIn("s.id", state)
-      .orWhereIn("c.id", counties)
+      // .orWhereIn("c.id", counties)
       .orWhereIn("cg.grants_id", category)
       .orWhereIn("eg.grants_id", eligibility)
-      .orWhere(function() {
-        this.where("g.grant_amount", ">", minAmountToNumericArray).andWhere("g.grant_amount", "<", maxAmountToNumericArray);
-      })
+      // .orWhere(function() {
+      //   this.where("g.grant_amount", ">", minAmountToNumericArray).andWhere("g.grant_amount", "<", maxAmountToNumericArray);
+      // })
       .orderBy("g.id")
   );
 }
