@@ -1,4 +1,5 @@
 
+
 const faker = require('faker');
 
 var userType = 0; 
@@ -30,5 +31,4 @@ exports.seed = function(knex) {
       batch_users.push(addUsers(useruserType))
     }
     return knex('users').insert(batch_users);
-
     };
