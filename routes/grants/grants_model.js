@@ -1,9 +1,10 @@
-const db = require('../../database/DbConfig');
+const db = require("../../database/DbConfig");
 
 module.exports = {
   find,
   findById,
   findPinnedGrants,
+  add,
   masterSearch,
   add,
   updateGrant,
@@ -13,35 +14,40 @@ module.exports = {
 
 // Function to obtain all grants
 function find() {
-  return db('grants');
+  return db("grants");
 }
 
 // Function to obtain all saved grants for a specific user
 function findPinnedGrants(recipientUserId) {
-  return db('saved_grants').where({ user_id: recipientUserId });
+  return db("saved_grants").where({ user_id: recipientUserId });
 }
 
-//Get grant by ID
-function findById(id) {
-  return db('grants').where({ id: id });
+// Get grants by grantor ID for dashboard
+function findById(userId) {
+  return db("grants").where({ user_id: userId });
+}
+
+// Creates new grant
+function add(grant) {
+  return db("grants").insert(grant);
 }
 
 //==========================================================================
 //Update/edit grants
 function updateGrant(id, data) {
-  return db('grants')
+  return db("grants")
     .where({ id: id })
     .update(data);
 }
 
 //Last modify
 function lastModify(data) {
-  return db('grants_modification_history').insert(data);
+  return db("grants_modification_history").insert(data);
 }
 
 //Last modify
 function getLastModify() {
-  return db('grants_modification_history');
+  return db("grants_modification_history");
 }
 //==========================================================================
 
@@ -52,17 +58,19 @@ function masterSearch(state = [],  minAmount=0,  maxAmount=0, eligibility = [], 
    // variable to control if search is combined with State and County 
 var stateFilterOnly = false;
 
-//CONVERTING STRING ARRAYS FOR minAmount AND maxAmount TO NUMERIC ARRAYS   
-  const minAmountToNumericArray = minAmount // parseFloa(minAmount); 
-  const maxAmountToNumericArray =  maxAmount;
+  //CONVERTING STRING ARRAYS FOR minAmount AND maxAmount TO NUMERIC ARRAYS
+  const minAmountToNumericArray = minAmount; // parseFloa(minAmount);
+  const maxAmountToNumericArray = maxAmount;
 
-  if (state.length === 0 && 
-      counties.length === 0 && 
+  if (
+    (state.length === 0 &&
+      counties.length === 0 &&
       minAmountToNumericArray === 0 &&
       maxAmountToNumericArray === 0 &&
-      eligibility.length === 0 && 
-      category.length === 0  || 
-      state[0] === 'All States') {
+      eligibility.length === 0 &&
+      category.length === 0) ||
+    state[0] === "All States"
+  ) {
 
       stateFilterOnly = true;
       
@@ -131,11 +139,9 @@ var stateFilterOnly = false;
   );
 }
 
-
-// function to add a new grant 
+// function to add a new grant
 function add(grantInfo) {
-  return db('grants')
-    .returning('*')
+  return db("grants")
+    .returning("*")
     .insert(grantInfo);
 }
-
