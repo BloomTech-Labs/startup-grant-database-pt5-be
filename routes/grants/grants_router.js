@@ -36,17 +36,17 @@ router.post("/", async (req, res) => {
 });
 
 //==========================================================================
-//GET grants by user ID
+GET grants by user ID
 
-// router.get("/:id", async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const grantResult = await db.findById(id);
-//     res.status(200).json(grantResult);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const grantResult = await db.findById(id);
+    res.status(200).json(grantResult);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 //==========================================================================
 //GET endpoint to obtain all grants matching state. counties, amount elegibility, and categories
@@ -55,7 +55,7 @@ router.get("/search", async (req, res) => {
     console.log("My request", req.query);
     const {
       state,
-      county,
+      //county,
       minimumAmount,
       maximumAmount,
       eligibility,
@@ -88,26 +88,8 @@ router.get("/search", async (req, res) => {
       eligibility,
       category
     } = req.query;
-    console.log(
-      "minimum",
-      minimumAmount,
-      state,
-      counties,
-      maximumAmount,
-      eligibility,
-      category
-    );
 
-    // console.log(req.query);
-
-    const grantSearch = await db.masterSearch(
-      state,
-      counties,
-      minimumAmount,
-      maximumAmount,
-      eligibility,
-      category
-    );
+    const grantSearch = await db.masterSearch(state, minimumAmount, maximumAmount, eligibility, category); //counties, 
     res.status(200).json(grantSearch);
   } catch (err) {
     console.error(err);
