@@ -71,7 +71,7 @@ var stateFilterOnly = false;
         myStates.push(i);
       }
      state = myStates; 
-     console.log('My States', state)
+     console.log('Elegibilitie', eligibility)
   }
   
   return (
@@ -122,11 +122,9 @@ var stateFilterOnly = false;
       )
       .whereIn("s.id", state)
       // .orWhereIn("c.id", counties)
-      .orWhereIn("cg.grants_id", category)
+      .orWhereIn("ck.id", category.map(item => Number))
       .orWhereIn("eg.grants_id", eligibility)
-      .orWhere(function() {
-        this.where("g.grant_amount", ">", minAmountToNumericArray).andWhere("g.grant_amount", "<", maxAmountToNumericArray);
-      })
+      .orWhere("g.grant_amount", ">", minAmountToNumericArray).orWhere("g.grant_amount", "<", maxAmountToNumericArray)
       .orderBy("g.id")
   );
 }
