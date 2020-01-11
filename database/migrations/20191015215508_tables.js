@@ -199,6 +199,7 @@ exports.up = function(knex) {
         // BELOW IS STRETCH OR 1.2
         // table.binary("application_documents");
       })
+
       //----------------------------------------------------------------------------------------------
 
       // STATUS HISTORY
@@ -221,6 +222,8 @@ exports.up = function(knex) {
           table.timestamp('created_at').notNullable();
       })
       //----------------------------------------------------------------------------------------------
+      //----------------------------------------------------------------------------------------------
+      
       //STATES TABLE
       .createTable('states', table => {
         table.increments('id'),

@@ -1,0 +1,36 @@
+exports.seed = function(knex) {
+ 
+          return knex('elegibility_grants').insert([
+
+            {grants_id: 1, elegibility_id:1},
+            {grants_id: 1, elegibility_id:2},
+            {grants_id: 2, elegibility_id:4},
+            {grants_id: 2, elegibility_id:5},
+            {grants_id: 3, elegibility_id:5},
+            {grants_id: 3, elegibility_id:4},
+            {grants_id: 4, elegibility_id:6},
+            {grants_id: 4, elegibility_id:4},
+            {grants_id: 5, elegibility_id:1},
+            {grants_id: 5, elegibility_id:2},
+            {grants_id: 6, elegibility_id:5},
+            {grants_id: 6, elegibility_id:3},
+            {grants_id: 7, elegibility_id:3},
+            {grants_id: 7, elegibility_id:2},
+            {grants_id: 8, elegibility_id:6},
+            {grants_id: 8, elegibility_id:4},
+            {grants_id: 9, elegibility_id:3},
+            {grants_id: 9, elegibility_id:5},
+            {grants_id: 10, elegibility_id:3},
+            {grants_id: 10, elegibility_id:1},
+            {grants_id: 11, elegibility_id:5},
+            {grants_id: 11, elegibility_id:6},
+            {grants_id: 12, elegibility_id:1},
+            {grants_id: 12, elegibility_id:3},
+            {grants_id: 13, elegibility_id:5},
+            {grants_id: 13, elegibility_id:6},
+            {grants_id: 14, elegibility_id:3},
+            {grants_id: 14, elegibility_id:2},
+            {grants_id: 15, elegibility_id:1},
+            {grants_id: 15, elegibility_id:3},
+          ]);
+};
