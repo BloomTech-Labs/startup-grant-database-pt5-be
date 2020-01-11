@@ -17,6 +17,7 @@ function find() {
 function findById(grantorID) {
   return db('grant_applications')
     .join('grants', 'grant_applications.grant_id', '=', 'grants.id')
+    .join('users', 'grant_applications.user_id', '=', 'users.id')
     .where({ 'grants.user_id': grantorID })
     .select(
       'grants.id',
@@ -26,7 +27,11 @@ function findById(grantorID) {
       'grant_applications.spending_plans',
       'grant_applications.mission_statement',
       'grant_applications.created_at',
-      'grant_applications.status'
+      'grant_applications.status',
+      'users.first_name',
+      'users.first_name',
+      'users.last_name',
+      'users.organization_name'
     );
 }
 
