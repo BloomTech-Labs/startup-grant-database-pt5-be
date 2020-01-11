@@ -1,10 +1,13 @@
 
+
 const faker = require('faker');
 
+var userType = 0; 
+
 //FUNCTION TO GENERATE USERS
-function addUsers() {
+function addUsers(userType) {
      return {
-      user_type: Math.round(Math.random()),
+      user_type: userType, //Math.round(Math.random()),
       email: faker.internet.email(),
       uid: faker.random.uuid(),
       first_name: faker.name.firstName(),
@@ -21,12 +24,11 @@ function addUsers() {
 };
 
 exports.seed = function(knex) {
-  
-      const batch_users = [];
-
-      for (let i = 0; i < 100; i++) {
-        batch_users.push(addUsers())
-      }
-      
-      return knex('users').insert(batch_users);
+    //Creates 30 users, ten are Grantors and ten are Applicants
+    const batch_users = [];
+    for (let i = 0; i < 30; i++) {
+      let useruserType = i % 2 === 0 ? 1 : 0;
+      batch_users.push(addUsers(useruserType))
+    }
+    return knex('users').insert(batch_users);
     };

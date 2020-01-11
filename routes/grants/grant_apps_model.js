@@ -16,14 +16,26 @@ function find() {
   return db("grant_applications");
 }
 
-// returns a grantor's grants
-function getMyGrants(grantorId) {
-  return db("grants").where({ user_id: grantorId });
-}
-
-// returns a grant's applications ** not needed **
-function findById(grantId) {
-  return db("grant_applications").where({ grant_id: grantId });
+// Get all applications for a current grantor
+function findById(grantorID) {
+  return db("grant_applications")
+    .join("grants", "grant_applications.grant_id", "=", "grants.id")
+    .join("users", "grant_applications.user_id", "=", "users.id")
+    .where({ "grants.user_id": grantorID })
+    .select(
+      "grants.id",
+      "grant_title",
+      "grants.user_id",
+      "grant_applications.worthy_because",
+      "grant_applications.spending_plans",
+      "grant_applications.mission_statement",
+      "grant_applications.created_at",
+      "grant_applications.status",
+      "users.first_name",
+      "users.first_name",
+      "users.last_name",
+      "users.organization_name"
+    );
 }
 
 // returns a grantor's applications
