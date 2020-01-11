@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
 });
 
 //==========================================================================
-GET grants by user ID
+// GET grants by user ID
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
