@@ -23,7 +23,7 @@ function addUsers(userType) {
 };
 
 exports.seed = function(knex) {
-    //Creates 20 users, ten are Grantors and ten are Applicants
+    //Creates 30 users, ten are Grantors and ten are Applicants
     const batch_users = [];
     for (let i = 0; i < 30; i++) {
       let useruserType = i % 2 === 0 ? 1 : 0;

@@ -45,7 +45,9 @@ router.get('/search', async (req,res) => {
     try {
         console.log('My request', req.query)
         const { state,  minimumAmount, maximumAmount, eligibility, category } = req.query; //county,
-        const grantSearch = await db.masterSearch(state, county, minimumAmount, maximumAmount, eligibility, category);
+        const grantSearch = await db.masterSearch(state, minimumAmount, maximumAmount, eligibility, category); //county
+
+        console.log('All my query params',  state,  minimumAmount, maximumAmount, eligibility, category);
         res.status(200).json(grantSearch);
     }
     catch (err) {
