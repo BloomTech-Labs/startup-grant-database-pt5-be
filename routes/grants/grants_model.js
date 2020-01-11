@@ -71,7 +71,7 @@ var stateFilterOnly = false;
         myStates.push(i);
       }
      state = myStates; 
-     console.log('Elegibilitie', eligibility)
+     console.log('Elegibilit', eligibility)
   }
   
   return (
@@ -80,7 +80,7 @@ var stateFilterOnly = false;
       .innerJoin('regions AS r', 'g.id', 'r.grant_id')
       .leftJoin('states AS s', 'r.state_id', '=', 's.id')
       // .leftJoin('counties AS c', 'r.county_id', 'c.id')
-      .innerJoin('elegibility_grants AS eg', 'g.id', 'eg.grants_id')
+      .leftJoin('elegibility_grants AS eg', 'g.id', 'eg.grants_id')
       .innerJoin('elegibility AS e', 'e.id', 'eg.elegibility_id')
       .innerJoin('category_grants AS cg', 'g.id', 'cg.grants_id')
       .innerJoin('category_keys AS ck', 'ck.id', 'cg.category_id')
@@ -122,9 +122,9 @@ var stateFilterOnly = false;
       )
       .whereIn("s.id", state)
       // .orWhereIn("c.id", counties)
-      .orWhereIn("ck.id", category.map(item => Number))
+      .orWhereIn("cg.grants_id", category)
       .orWhereIn("eg.grants_id", eligibility)
-      .orWhere("g.grant_amount", ">", minAmountToNumericArray).orWhere("g.grant_amount", "<", maxAmountToNumericArray)
+      .orWhere("g.grant_amount", ">", minAmountToNumericArray).andWhere("g.grant_amount", "<", maxAmountToNumericArray)
       .orderBy("g.id")
   );
 }
