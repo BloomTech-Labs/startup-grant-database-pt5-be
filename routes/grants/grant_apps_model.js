@@ -3,8 +3,9 @@ const db = require("../../database/DbConfig.js");
 module.exports = {
   find,
   findById,
-  getMyGrants,
+  // getMyGrants,
   getAllApps,
+  getMySubmittedApps,
   add,
   createStatus,
   updateStatus,
@@ -14,6 +15,14 @@ module.exports = {
 // returns all grants
 function find() {
   return db("grant_applications");
+}
+
+// Get all applications that a user has submitted for recipient dashboard
+function getMySubmittedApps(recipientID) {
+  return db("grant_applications")
+    .join("grants", "grant_applications.grant_id", "=", "grants.id")
+    .where({ "grant_applications.user_id": recipientID })
+    .select("grants.id", "grant_title", "grant_amount", "status");
 }
 
 // Get all applications for a current grantor

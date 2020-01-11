@@ -13,26 +13,14 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get all applications for a current grantor
+// Below collects all applications submitted by grantee
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const grants = await DB.getMyGrants(id);
-    // below returns an array of grants belonging to the grantor
-    // res.status(200).json(grants);
-    let grantIds = [];
-    let applications = [];
-    grants.map(grant => {
-      grantIds.push(grant.id);
-    });
-    grantIds.map(id => {
-      let apps = DB.findById(id);
-      // applications.push(apps);
-      console.log(apps);
-    });
-    res.status(200).send(applications);
+    const apps = await DB.getMySubmittedApps(id);
+    res.status(200).json(apps);
   } catch (err) {
-    res.status(500).json(err.message);
+    res.statuus(500).json(err.message);
   }
 });
 
