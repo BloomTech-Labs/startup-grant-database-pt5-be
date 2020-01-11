@@ -1,10 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const DB = require("./grant_apps_model.js");
+const DB = require('./grant_apps_model.js');
 
 // below returns all saved grants solely
 // for testing purposes
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const allSaved = await DB.find();
     res.status(200).json(allSaved);
@@ -13,8 +13,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-// below finds applications for a specific grant
-router.get("/:id", async (req, res) => {
+// Get all applications for a current grantor
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const applications = await DB.findById(id);
@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   const app = req.body;
   try {
     const newApplication = await DB.add(app);
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id/status", async (req, res) => {
+router.put('/:id/status', async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
   try {
