@@ -1,9 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const DB = require("./grant_apps_model.js");
+const DB = require('./grant_apps_model.js');
 
-// below returns all saved grants for testing purposes
-router.get("/", async (req, res) => {
+// below returns all saved grants solely
+// for testing purposes
+router.get('/', async (req, res) => {
   try {
     const allSaved = await DB.find();
     res.status(200).json(allSaved);
@@ -12,22 +13,33 @@ router.get("/", async (req, res) => {
   }
 });
 
-// below finds a grant for a specific user with route params
-router.get("/:id", async (req, res) => {
+// Get all applications for a current grantor
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const savedGrants = await DB.findById(id);
-    res.status(200).json(savedGrants);
+    const applications = await DB.findById(id);
+    res.status(200).json(applications);
   } catch (err) {
     res.status(500).json(err.message);
   }
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   const app = req.body;
   try {
     const newApplication = await DB.add(app);
     res.status(201).json(newApplication);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
+router.put('/:id/status', async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  try {
+    const updatedStatus = await DB.updateStatus(id, status);
+    res.status(200).json(updatedStatus);
   } catch (err) {
     res.status(500).json(err.message);
   }

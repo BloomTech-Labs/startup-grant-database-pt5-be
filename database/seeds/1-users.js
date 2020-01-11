@@ -1,4 +1,5 @@
 
+
 const faker = require('faker');
 
 var userType = 0; 
