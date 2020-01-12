@@ -13,8 +13,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Below collects all applications submitted by grantee
-router.get("/:id", async (req, res) => {
+// below collects all applications submitted by grantee
+router.get("/recipient/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const apps = await DB.getMySubmittedApps(id);
@@ -24,6 +24,17 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/grantor/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const apps = await DB.getAllApps(id);
+    res.status(200).json(apps);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
+// below creates an application
 router.post("/", async (req, res) => {
   const app = req.body;
   try {
@@ -34,6 +45,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// below updates application when approved or denied
 router.put("/:id/status", async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -44,6 +56,9 @@ router.put("/:id/status", async (req, res) => {
     res.status(500).json(err.message);
   }
 });
+
+// ---------------------------------------------------------
+// ---------below endpoints should never be used------------
 
 router.post("/statuses", async (req, res) => {
   const newStatus = req.body;
