@@ -8,7 +8,10 @@ module.exports = {
   add,
   updateGrant,
   lastModify,
-  getLastModify
+  getLastModify,
+  addCat,
+  addEli,
+  addState
 };
 
 // Function to obtain all grants
@@ -137,3 +140,23 @@ function add(grantInfo) {
     .insert(grantInfo);
 }
 
+// add a category to a grant 
+function addCat(data) {
+  return db('category_grants')
+    .returning('id')
+    .insert(data);
+}
+
+// add an eligibility to a grant
+function addEli(data) {
+  return db('elegibility_grants')
+    // .returning('id')
+    .insert(data);
+}
+
+// add a state to a grant
+function addState(data) {
+  return db('regions')
+    .returning('id')
+    .insert(data);
+}

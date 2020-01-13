@@ -98,5 +98,39 @@ router.put('/:id', async (req, res) => {
 
 //==========================================================================
 
+// Posts new categories related to a grant
+
+router.post('/categories', async (req, res) => {
+  const newCat = req.body;
+  try {
+    const addCat = await db.addCat(newCat);
+    res.status(201).json(addCat);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Posts new eligibilities related to a grant
+
+router.post('/eli', async (req, res) => {
+  const newEleg = req.body;
+  try {
+    const addEle = await db.addEli(newEleg);
+    res.status(201).json(addEle);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// posts new states related to a grant
+router.post('/regions', async (req, res) => {
+  const newReg = req.body;
+  try {
+    const addState = await db.addState(newReg);
+    res.status(201).json(addState);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 module.exports = router;
